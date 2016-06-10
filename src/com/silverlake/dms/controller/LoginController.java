@@ -39,7 +39,7 @@ public class LoginController
 						{
 								System.out.println("User Login Successful");
 								request.setAttribute("loggedInUser", loginBean.getUsername());
-								model = new ModelAndView("welcome");
+								model = new ModelAndView("dashboard");
 						}
 						else
 						{
