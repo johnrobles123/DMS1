@@ -3,9 +3,10 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Login</title>
+		<title>Index</title>
 	</head>
 	<body>
 		<h2>Hi!</h2>
+		<p><a href="login">To Login</a></p>
 	</body>
 </html>
