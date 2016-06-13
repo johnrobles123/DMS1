@@ -8,5 +8,14 @@
 </head>
 <body>
 	<h2>Device Monitoring System</h2>
+	<font color="red">${message}</font>
+	<form:form id="dashboardForm" method="get" action="dashboard" modelAttribute="deviceBean">
+
+		<!--form:label path="username">Enter your user-name</form:label>
+		<form:input id="username" name="username" path="" /><br>
+		<form:label path="username">Please enter your password</form:label>
+		<form:password id="password" name="password" path="" /><br-->
+		<input type="submit" value="Submit" />
+	</form:form>
 </body>
 </html>

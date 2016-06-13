@@ -28,6 +28,7 @@ public class LoginController
 			model.addObject("loginBean", loginBean);
 			return model;
 		}
+		
 		@RequestMapping(value="/login",method=RequestMethod.POST)
 		public ModelAndView executeLogin(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("loginBean")LoginBean loginBean)
 		{
@@ -39,7 +40,8 @@ public class LoginController
 						{
 								System.out.println("User Login Successful");
 								request.setAttribute("loggedInUser", loginBean.getUsername());
-								model = new ModelAndView("dashboard");
+								//model = new ModelAndView("dashboard");
+								response.sendRedirect("/DMS1/dashboard");
 						}
 						else
 						{
