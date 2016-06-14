@@ -18,7 +18,7 @@
 	   jQuery(document).ready(function () {
 	  
 	             jQuery("#projectTable").jqGrid({
-	                 url: "LoadJsonDataServlet?type=BS21 7RH",
+	                 url: "/jsp/dashboard",
 	                 datatype: "json",
 	                 jsonReader: {repeatitems: false, id: "ref"},
 	                 colNames:['ID','Reservation Date', 'User Name', 'Device Name', 'Status', 'Cancel?', 'Verify Return'],
@@ -51,15 +51,18 @@
 	  </script>
 	 </head>
 	 <body>
-	  <table id="grid"></table>
-	    <hr>
-	  <div>
-	         <div>
-	          <div style="float: left;">
-	              <table id="projectTable"></table>
-	              <div id="pagingDiv"></div>
-	          </div>
-	         </div>
-	  </div>
+		    <hr>
+		  <div>
+		<form:form id="dashboardForm" method="post" action="dashboard" modelAttribute="deviceBean">
+		  		<table id="grid"></table>
+		         <div>
+		          <div style="float: left;">
+		              <table id="projectTable"></table>
+		              <div id="pagingDiv"></div>
+		          </div>
+		         </div>
+			<input type="submit" value="Submit" />
+		</form:form>
+		  </div>
 	</body>
 </html>
