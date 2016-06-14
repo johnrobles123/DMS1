@@ -32,7 +32,7 @@ public class DashboardController extends HttpServlet {
 		ModelAndView model = new ModelAndView("dashboard");
 		//LoginBean loginBean = new LoginBean();
 		
-		List<DeviceJournal> deviceJournalList = new ArrayList<DeviceJournal>();
+		//List<DeviceJournal> deviceJournalList = new ArrayList<DeviceJournal>();
 		
 		model.addObject("deviceJournal", deviceJournal);
 		return model;
