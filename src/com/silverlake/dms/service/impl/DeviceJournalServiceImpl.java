@@ -34,9 +34,9 @@ public class DeviceJournalServiceImpl implements DeviceJournalService {
 		java.sql.Date sqlDate = new java.sql.Date(cal.getTime().getTime());
 		
 		DeviceJournal dj = new DeviceJournal();
-		dj.setId(1);
+		dj.setId(2);
 		dj.setDateTime(sqlDate);
-		dj.setDeviceName("Projector 1");
+		dj.setDeviceName("Projector 2");
 		dj.setReserveDate(sqlDate);
 		
 		deviceJournalDao.insert(dj);

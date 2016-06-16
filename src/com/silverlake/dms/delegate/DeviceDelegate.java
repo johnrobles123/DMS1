@@ -22,6 +22,17 @@ public class DeviceDelegate {
 	{
 			this.deviceJournalService = deviceJournalService;
 	}
+	
+	public List<DeviceJournal> selectAllData() {
+		List<DeviceJournal> returnDeviceJournal = null;
+		try {
+			returnDeviceJournal = deviceJournalService.fetchAllDeviceJournal();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return returnDeviceJournal;
+	}
 
 	public void addDevice() throws SQLException {		
 		deviceJournalService.addDeviceJournal();
