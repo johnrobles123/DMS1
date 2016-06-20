@@ -31,9 +31,12 @@
 		    float:left;
 		    padding:10px;
 		}
-		.devicejournaltable thead tr th {
+		
+		#devicejournaltable thead tr th {
 			text-align:left;
 		}
+		
+		
 		#footer {
 		    background-color:black;
 		    color:white;
@@ -42,41 +45,81 @@
 		    padding:5px;
 		}
 	  </style>	   
-	   
-	  <!-- script type='text/javascript'>
-	   jQuery(document).ready(function () {
 	  
-	             jQuery("#projectTable").jqGrid({
-	                 url: "dashboard",
-	                 datatype: "json",
-	                 jsonReader: {repeatitems: false, id: "ref"},
-	                 //colNames:['ID','Reservation Date', 'User Name', 'Device Name', 'Status', 'Cancel?', 'Verify Return'],
-	                 colNames:['ID','Date', 'Device Name', 'Reserve Date'],
-	                 colModel:[
-	                     {name:'id',index:'id', width:100},
-	                     {name:'dateTime',index:'dateTime', width:100},
-	                     {name:'deviceName',index:'deviceName', width:200},
-	                     {name:'reserveDate',index:'reserveDate', width:200}
-	                 ],
-	                 rowNum:20,
-	                 rowList:[20,60,100],
-	                 height:300,
-	                 pager: "#pagingDiv",
-	                 viewrecords: true,
-	                 caption: "Reservation Journal"
-	             });
-	              
-	             $("#pcSelect").change(function(){
-	                 var postcode = $("#pcSelect").val();
-	                 jQuery("#projectTable").jqGrid(
-	                         "setGridParam",{
-	                             url:"dashboard",
-	                             page:1})
-	                         .trigger("reloadGrid");
-	             });
-	         });
-	  </script-->
+	<script type="text/javascript"> 
+	    function Pager(tableName, itemsPerPage) { 
+	        this.tableName = tableName; 
+	        this.itemsPerPage = itemsPerPage; 
+	        this.currentPage = 1; 
+	        this.pages = 0; 
+	        this.inited = false; 
+	         
+	        this.showRecords = function(from, to) {         
+	            var rows = document.getElementById(tableName).rows; 
+	            // i starts from 1 to skip table header row 
+	            for (var i = 1; i < rows.length; i++) { 
+	                if (i < from || i > to)   
+	                    rows[i].style.display = 'none'; 
+	                else 
+	                    rows[i].style.display = ''; 
+	            } 
+	        } 
+	         
+	        this.showPage = function(pageNumber) { 
+	         if (! this.inited) { 
+	          alert("not inited"); 
+	          return; 
+	         } 
+	     
+	            var oldPageAnchor = document.getElementById('pg'+this.currentPage); 
+	            oldPageAnchor.className = 'pg-normal'; 
+	             
+	            this.currentPage = pageNumber; 
+	            var newPageAnchor = document.getElementById('pg'+this.currentPage); 
+	            newPageAnchor.className = 'pg-selected'; 
+	             
+	            var from = (pageNumber - 1) * itemsPerPage + 1; 
+	            var to = from + itemsPerPage - 1; 
+	            this.showRecords(from, to); 
+	        }    
+	         
+	        this.prev = function() { 
+	            if (this.currentPage > 1) 
+	                this.showPage(this.currentPage - 1); 
+	        } 
+	         
+	        this.next = function() { 
+	            if (this.currentPage < this.pages) { 
+	                this.showPage(this.currentPage + 1); 
+	            } 
+	        }                         
+	         
+	        this.init = function() { 
+	            var table = document.getElementById(tableName);
+	            var rows = table.rows;
+	            var records = rows.length - 1;
+	            this.pages = Math.ceil(records / itemsPerPage); 
+	            this.inited = true; 
+	        } 
+	     
+	        this.showPageNav = function(pagerName, positionId) { 
+	         if (! this.inited) { 
+	          alert("not inited"); 
+	          return; 
+	         } 
+	         var element = document.getElementById(positionId); 
+	          
+	         var pagerHtml = '<span onclick="' + pagerName + '.prev();" class="pg-normal"> « Prev </span> | '; 
+	            for (var page = 1; page <= this.pages; page++)  
+	                pagerHtml += '<span id="pg' + page + '" class="pg-normal" onclick="' + pagerName + '.showPage(' + page + ');">' + page + '</span> | '; 
+	            pagerHtml += '<span onclick="'+pagerName+'.next();" class="pg-normal"> Next »</span>';             
+	             
+	            element.innerHTML = pagerHtml; 
+	        } 
+	    } 
+    </script> 
 	 </head>
+	 
 	 <body>		
 		<div id="header">
 			<h1>Device Monitoring System</h1>
@@ -132,7 +175,7 @@
 			
 					<h1>Device Schedule</h1>
 			
-					<table class="devicejournaltable" style="width:100%">
+					<table id="devicejournaltable" style="width:100%">
 						<thead>
 							<tr>
 								<th>#ID</th>
@@ -164,18 +207,14 @@
 						    </tr>
 						</c:forEach>
 					</table>
-			
+				    <div id="pageNavPosition" align="center"></div>
+				    <script type="text/javascript">
+			            var pager = new Pager("devicejournaltable", 2);  
+			            pager.init();  
+			            pager.showPageNav('pager', 'pageNavPosition');  
+			            pager.showPage(1);
+				    </script>
 				</div>
-			<!-- form:form id="dashboardForm" method="post" action="dashboard" modelAttribute="deviceJournal">
-			  		<table id="grid"></table>
-			         <div>
-			          <div style="float: left;">
-			              <table id="projectTable"></table>
-			              <div id="pagingDiv"></div>
-			          </div>
-			         </div>
-				<center>Welcome ${deviceJournal}</center>
-			</form:form-->
 		</div>
 	</body>
 </html>
