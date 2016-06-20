@@ -1,5 +1,7 @@
 package com.silverlake.dms.controller;
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,47 +12,57 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.silverlake.dms.dao.ReservationDao;
+import com.silverlake.dms.delegate.ReservationDelegate;
 import com.silverlake.dms.viewBean.*;
 
+@Controller
 public class ReservationController {
+	
 	@Autowired
-	private LoginDelegate loginDelegate;
-
-	@RequestMapping(value="/login",method=RequestMethod.GET)
-	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response, ReservationBean loginBean)
+	private ReservationDelegate reservationDelegate;
+	
+	@RequestMapping(value="/reserve",method=RequestMethod.GET)
+	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response, ReservationBean reservation)
 	{
-		ModelAndView model = new ModelAndView("login");
+		ModelAndView model = new ModelAndView("reserve");
 		//LoginBean loginBean = new LoginBean();
-		model.addObject("loginBean", loginBean);
+		model.addObject("reservation", reservation);
 		return model;
 	}
 	
-	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public ModelAndView executeLogin(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("loginBean")LoginBean loginBean)
+	@RequestMapping(value="/reserve",method=RequestMethod.POST)
+	public String createReservation(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("reservation")  ReservationBean reservation) throws SQLException
 	{
-			ModelAndView model= null;
-			try
+		String ret = null;
+		ModelAndView model= null;
+		
+		try
+		{
+			boolean isValidRange = reservationDelegate.isValidRange( reservation);
+			if(isValidRange)
 			{
-					boolean isValidUser = loginDelegate.isValidUser(loginBean.getUsername(), loginBean.getPassword());
-					if(isValidUser)
-					{
-							System.out.println("User Login Successful");
-							request.setAttribute("loggedInUser", loginBean.getUsername());
-							//model = new ModelAndView("dashboard");
-							response.sendRedirect("/DMS1/dashboard");
-					}
-					else
-					{
-							model = new ModelAndView("login");
-							request.setAttribute("message", "Invalid credentials!!");
-					}
-
+				System.out.println("User Login Successful");
+				request.setAttribute("loggedInUser", reservation.getDeviceName());
+				//model = new ModelAndView("dashboard");
+				 ret = "reserve";
 			}
-			catch(Exception e)
+			else
 			{
-					e.printStackTrace();
+				model = new ModelAndView("reservation");
+				request.setAttribute("message", "Invalid credentials!!");
 			}
-
-			return model;
+			
+			if (!reservationDelegate.isOverlap(reservation))
+			{
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		reservationDelegate.create(reservation);
+		
+		return ret;
 	}
 }
