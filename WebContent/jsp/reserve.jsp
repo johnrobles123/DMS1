@@ -25,10 +25,10 @@
 			<table>
 			<tbody>
 				<tr>
-				<td>Device Name:</td> <td><input type="text" name="deviceName" id="deviceName" size="30"maxlength="255"/></td>
+				<td>Device Name:</td> <td><input type="text" name="deviceName" id="deviceName" size="30" maxlength="255" required/></td>
 				</tr>
 				<tr>
-				<td>Reservation Date:</td> <td><input type="text" name="reserveDate" class="datepicker" size="30"maxlength="10"/></td>
+				<td>Reservation Date:</td> <td><input type="text" name="reserveDate" class="datepicker" size="30"maxlength="10" required/></td>
 				</tr>
 			</tbody>
 			<tbody>
@@ -69,7 +69,8 @@
 				</tr>
 				<tr>
 				<td>Repeat: </td> <td><select name="repeating"> <option></option> <option>Daily</option> <option>Weekly</option>  </select></td>
-				<td>Until: </td>  <td><input type="date" name="repeatTo" class="datepicker" size="50"maxlength="10"/></td>
+				
+				<td>Until: </td>  <td><input type="text" name="repeatTo" class="datepicker" size="50"maxlength="10" /></td>
 				</tr>
 				<tr>				
 				<td>Location: </td> <td><input name="location" id="location"/></td>
