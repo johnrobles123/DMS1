@@ -37,6 +37,19 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
+
+	<bean id="reservationDelegate" class="com.silverlake.dms.delegate.ReservationDelegate">
+		<property name="reservationService" ref="reservationService"></property>
+	</bean>
+
+	<bean id="reservationService" class="com.silverlake.dms.service.impl.ReservationServiceImpl">
+		<property name="reservationDao" ref="reservationDao"></property>
+	</bean>
+
+	<bean name="reservationDao" class="com.silverlake.dms.dao.impl.ReservationDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -52,6 +65,18 @@
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="addUserDelegate" class="com.silverlake.dms.delegate.AddUserDelegate">
+		<property name="addUserService" ref="addUserService"></property>
+	</bean>
+
+	<bean name="addUserDao" class="com.silverlake.dms.dao.impl.AddUserDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<bean name="addUserService" class="com.silverlake.dms.service.impl.AddUserServiceImpl">
+		<property name="addUserDao" ref="addUserDao"></property>
 	</bean>
 	
 	<tx:annotation-driven transaction-manager="transactionManager" />

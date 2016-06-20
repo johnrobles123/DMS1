@@ -19,6 +19,7 @@ import com.silverlake.dms.delegate.DeviceDelegate;
 import com.silverlake.dms.grid.DeviceJournalGrid;
 import com.silverlake.dms.viewBean.DeviceBean;
 import com.silverlake.dms.viewBean.DeviceJournal;
+import com.silverlake.dms.viewBean.DeviceListBean;
 
 @Controller
 public class DashboardController {
@@ -30,9 +31,12 @@ public class DashboardController {
 	public String displayDashboard(Model model)
 	{
 		List<DeviceJournal> djList = new ArrayList<DeviceJournal>();
+		List<DeviceListBean> dList = new ArrayList<DeviceListBean>();
 		
 		try {
 			djList = deviceDelegate.selectAllData();
+			dList.add(new DeviceListBean("Projector 1", "1", "old projector"));
+			dList.add(new DeviceListBean("Projector 2", "2", "new projector"));
 
 		    /*
 			int totalNumberOfPages = 1;
@@ -50,6 +54,7 @@ public class DashboardController {
 		
 		//model.addObject("deviceJournal", djList);
 		model.addAttribute("deviceJournal", djList);
+		model.addAttribute("deviceList", dList);
 		return "dashboard";
 	}
 }
