@@ -7,7 +7,7 @@ public class DeviceListBean {
 	private String additionalInfo;
 	
 	public DeviceListBean (String deviceName, String serialNo, String additionalInfo) {
-		this.deviceName = deviceName;
+		this.deviceName = deviceName; 
 		this.serialNo = serialNo;
 		this.additionalInfo = additionalInfo;
 	}
