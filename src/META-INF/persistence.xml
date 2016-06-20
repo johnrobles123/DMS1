@@ -4,7 +4,6 @@
          version="2.1">
 	<persistence-unit name="dmsPersistence" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>com.silverlake.dms.repositories.entities.DeviceJournal</class>
 		<properties>
 		   <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 		   <property name="hibernate.hbm2ddl.auto" value="create-drop"/>

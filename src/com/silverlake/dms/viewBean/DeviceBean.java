@@ -6,6 +6,8 @@ public class DeviceBean {
 	
 	private String deviceName;
 	
+	private String status;
+	
 	public int getId() {
 		return id;
 	}
@@ -20,5 +22,13 @@ public class DeviceBean {
 
 	public void setDeviceName(String deviceName) {
 		this.deviceName = deviceName;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }
