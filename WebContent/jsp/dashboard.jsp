@@ -214,6 +214,11 @@
 			            pager.showPageNav('pager', 'pageNavPosition');  
 			            pager.showPage(1);
 				    </script>
+					<div style="width:40%; float:right">
+						<tr align="left">
+							<td><p><a href="reserve">Make a Reservation</a></p></td>
+						</tr>
+					</div>
 				</div>
 		</div>
 	</body>
