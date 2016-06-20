@@ -4,6 +4,6 @@ import java.sql.SQLException;
 
 public interface AddUserService {
 
-	public boolean addUser(String firstName, String lastName, String isAdmin)
+	public boolean addUser(String fName, String lName,String emai, String pword, String admin)
 			throws SQLException;
 }

@@ -18,9 +18,9 @@ public class AddUserServiceImpl implements AddUserService {
 	}
 
 	@Override
-	public boolean addUser(String firstName, String lastName, String isAdmin)
-			throws SQLException {
-		return addUserDao.addUser(firstName, lastName, isAdmin);
+	public boolean addUser(String fName, String lName, String email,
+			String pword, String admin) throws SQLException {
+		return addUserDao.addUser(fName, lName, email, pword, admin);
 	}
 
 }

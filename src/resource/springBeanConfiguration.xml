@@ -54,6 +54,18 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>
 	
+	<bean id="addUserDelegate" class="com.silverlake.dms.delegate.AddUserDelegate">
+		<property name="addUserService" ref="addUserService"></property>
+	</bean>
+
+	<bean id="addUserService" class="com.silverlake.dms.service.impl.AddUserServiceImpl">
+		<property name="addUserDao" ref="addUserDao"></property>
+	</bean>
+
+	<bean name="addUserDao" class="com.silverlake.dms.dao.impl.AddUserDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
 	<context:component-scan base-package="com.silverlake.dms.repositories.entities" />

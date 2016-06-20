@@ -1,52 +1,62 @@
 package com.silverlake.dms.viewBean;
 
+import java.util.Date;
 
 public class AddUserBean {
 
 	// private int id;
-	private String firstName;
-	private String lastName;
-	// private Date dateCrated;
-	private String isAdmin;
+	private String fName;
+	private String lName;
+	private String email;
+	private String pword;
+	private Date dateCreated;
+	private String admin;
 
-	// public int getId() {
-	// return id;
-	// }
-	//
-	// public void setId(int id) {
-	// this.id = id;
-	// }
-
-	public String getFirstName() {
-		return firstName;
+	public String getfName() {
+		return fName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setfName(String fName) {
+		this.fName = fName;
 	}
 
-	public String getLasttName() {
-		return lastName;
+	public String getlName() {
+		return lName;
 	}
 
-	public void setLasttName(String lasttName) {
-		this.lastName = lasttName;
+	public void setlName(String lName) {
+		this.lName = lName;
 	}
 
-	// public Date getDateCrated() {
-	// return dateCrated;
-	// }
-	//
-	// public void setDateCrated(Date dateCrated) {
-	// this.dateCrated = dateCrated;
-	// }
-
-	public String getIsAdmin() {
-		return isAdmin;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setIsAdmin(String isAdmin) {
-		this.isAdmin = isAdmin;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
+	public String getPword() {
+		return pword;
+	}
+
+	public void setPword(String pword) {
+		this.pword = pword;
+	}
+
+	public Date dateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCrated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public String getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(String admin) {
+		this.admin = admin;
+	}
 }

@@ -1,10 +1,8 @@
 package com.silverlake.dms.dao.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
+import java.sql.PreparedStatement;
 import javax.sql.DataSource;
-
 import com.silverlake.dms.dao.AddUserDao;
 
 public class AddUserDaoImpl implements AddUserDao {
@@ -20,17 +18,19 @@ public class AddUserDaoImpl implements AddUserDao {
 	}
 
 	@Override
-	public boolean addUser(String firstName, String lastName, String isAdmin)
-			throws SQLException {
-		String insert = "insert into users_jc (first_name,last_nameis_admin)"
-				+ "values (?, ?, ?, )";
+	public boolean addUser(String fName, String lName, String email,
+			String pword, String admin) throws SQLException {
+		String insert = "insert into users (fname,lname,email,password,admin)"
+				+ "values (?, ?, ?, ?,?)";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(
 				insert);
 		// pstmt.setInt(1, id);
-		pstmt.setString(2, firstName);
-		pstmt.setString(3, lastName);
-		// pstmt.setDate(4, dateCrated);
-		pstmt.setString(5, isAdmin);
+		pstmt.setString(2, fName);
+		pstmt.setString(3, lName);
+		pstmt.setString(4, email);
+		pstmt.setString(5, pword);
+		// pstmt.setDate(6, dateCrated);
+		pstmt.setString(7, admin);
 		try {
 
 		} catch (Exception e) {
@@ -42,5 +42,4 @@ public class AddUserDaoImpl implements AddUserDao {
 		else
 			return false;
 	}
-
 }
