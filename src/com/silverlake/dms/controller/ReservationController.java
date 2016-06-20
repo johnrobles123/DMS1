@@ -35,7 +35,7 @@ public class ReservationController {
 	public String createReservation(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("reservation")  ReservationBean reservation) throws SQLException
 	{
 		String ret = null;
-		ModelAndView model= null;
+		ModelAndView model= null;  
 		
 		try
 		{

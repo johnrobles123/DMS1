@@ -20,14 +20,14 @@ public class LoginController
 		@Autowired
 		private LoginDelegate loginDelegate;
 
-//		@RequestMapping(value="/login",method=RequestMethod.GET)
-//		public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response, LoginBean loginBean)
-//		{
-//			ModelAndView model = new ModelAndView("login");
-//			//LoginBean loginBean = new LoginBean();
-//			model.addObject("loginBean", loginBean);
-//			return model;
-//		}
+		@RequestMapping(value="/login",method=RequestMethod.GET)
+		public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response, LoginBean loginBean)
+		{
+			ModelAndView model = new ModelAndView("login");
+			//LoginBean loginBean = new LoginBean();
+			model.addObject("loginBean", loginBean);
+			return model;
+		}
 		
 		@RequestMapping(value="/login",method=RequestMethod.POST)
 		public ModelAndView executeLogin(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("loginBean")LoginBean loginBean)

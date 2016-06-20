@@ -5,14 +5,14 @@ import com.silverlake.dms.service.AddUserService;
 
 public class AddUserDelegate {
 
-	private AddUserService adduserService;
+	private AddUserService addUserService;
 
-	public AddUserService getAdduserService() {
-		return adduserService;
+	public AddUserService getAddUserService() {
+		return addUserService;
 	}
 
-	public void setAdduserService(AddUserService adduserService) {
-		this.adduserService = adduserService;
+	public void setAddUserService(AddUserService addUserService) {
+		this.addUserService = addUserService;
 	}
 
 	public boolean addUser(String fName, String lName,String email, String pword, String admin)
