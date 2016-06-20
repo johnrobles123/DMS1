@@ -97,10 +97,25 @@
 		
 		<div id="section">
 			<div class="filters">
-				<form>
-				  Device name : <input type="text" name="devicename"><br>
-				  Status : <input type="text" name="status">
-				</form>
+				<table>
+					<tr>
+						<td>Select a Device Name :</td>
+						<td> 
+							<form action="listdevice">
+	
+	                            <select name="ddDeviceList">
+	                                <c:forEach var="devicelist" items="${deviceList}">
+	                                    <option value="${devicelist.serialNo}">${devicelist.deviceName}</option>
+	                                </c:forEach>
+	                            </select>
+                        	</form>
+                    	</td>
+					</tr>
+					<tr>
+						<td>Current Status :</td>
+						<td><input type="text" name="status" disabled></td>
+					</tr>
+				</table>
 			</div>
 		
 			<div class="container">
