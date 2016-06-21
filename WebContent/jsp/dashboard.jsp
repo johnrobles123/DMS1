@@ -197,9 +197,9 @@
 								<td width="10%">${user.timeFrom}</td>
 								<td width="10%">${user.timeTo}</td>
 								<td width="30%">
-								  <spring:url value="/users/${user.seqNo}" var="userUrl" />
-								  <spring:url value="/users/${user.seqNo}/delete" var="deleteUrl" /> 
-								  <spring:url value="/users/${user.seqNo}/update" var="updateUrl" />
+								  <spring:url value="/reserve/${user.seqNo}" var="userUrl" />
+								  <spring:url value="/reserve/${user.seqNo}/delete" var="deleteUrl" /> 
+								  <spring:url value="/reserve/${user.seqNo}/update" var="updateUrl" />
 				
 								  <button class="btn btn-info" 
 				                                          onclick="location.href='${userUrl}'">Query</button>
