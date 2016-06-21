@@ -178,24 +178,28 @@
 					<table id="devicejournaltable" style="width:100%">
 						<thead>
 							<tr>
-								<th>#ID</th>
-								<th>Date</th>
+								<th>Seq No</th>
 								<th>Device Name</th>
+								<th>User Name</th>
 								<th>Reserve Date</th>
+								<th>Time From</th>
+								<th>Time To</th>
 								<th>Action</th>
 							</tr>
 						</thead>
 			
 						<c:forEach var="user" items="${deviceJournal}">
 						    <tr>
-								<td width="10%">${user.id}</td>
-								<td width="15%">${user.dateTime}</td>
-								<td width="20%">${user.deviceName}</td>
-								<td width="15%">${user.reserveDate}</td>
-								<td width="40%">
-								  <spring:url value="/users/${user.id}" var="userUrl" />
-								  <spring:url value="/users/${user.id}/delete" var="deleteUrl" /> 
-								  <spring:url value="/users/${user.id}/update" var="updateUrl" />
+								<td width="10%">${user.seqNo}</td>
+								<td width="15%">${user.deviceName}</td>
+								<td width="15%">${user.userName}</td>
+								<td width="10%">${user.reserveDate}</td>
+								<td width="10%">${user.timeFrom}</td>
+								<td width="10%">${user.timeTo}</td>
+								<td width="30%">
+								  <spring:url value="/users/${user.seqNo}" var="userUrl" />
+								  <spring:url value="/users/${user.seqNo}/delete" var="deleteUrl" /> 
+								  <spring:url value="/users/${user.seqNo}/update" var="updateUrl" />
 				
 								  <button class="btn btn-info" 
 				                                          onclick="location.href='${userUrl}'">Query</button>
@@ -214,7 +218,7 @@
 			            pager.showPageNav('pager', 'pageNavPosition');  
 			            pager.showPage(1);
 				    </script>
-					<div style="width:40%; float:right">
+					<div style="width:30%; float:right">
 						<tr align="left">
 							<td><p><a href="reserve">Make a Reservation</a></p></td>
 						</tr>
