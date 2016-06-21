@@ -43,7 +43,7 @@ public class ReservationController {
 			if(isValidRange)
 			{
 				System.out.println("User Login Successful");
-				request.setAttribute("loggedInUser", reservation.getDeviceName());
+				request.setAttribute("loggedInUser", reservation.getDeviceSerialNo());
 				//model = new ModelAndView("dashboard");
 				 ret = "reserve";
 			}

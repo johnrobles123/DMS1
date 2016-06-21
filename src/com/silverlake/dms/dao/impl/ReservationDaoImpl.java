@@ -1,8 +1,11 @@
 package com.silverlake.dms.dao.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +15,7 @@ import java.sql.Time;
 import javax.sql.DataSource;
 
 import com.silverlake.dms.dao.ReservationDao;
+import com.silverlake.dms.viewBean.DeviceJournal;
 import com.silverlake.dms.viewBean.ReservationBean;
 
 
@@ -75,12 +79,12 @@ public class ReservationDaoImpl implements ReservationDao {
 		if (reservation.getReserveDate().isEmpty() ||
 			reservation.getTimeFrom().isEmpty() ||
 			reservation.getTimeTo().isEmpty()||
-			reservation.getDeviceName().isEmpty())
+			reservation.getDeviceSerialNo().isEmpty())
 		{
 			ret = false;
 		}
 		
-		if (reservation.getDReservationDate().getDay() > 5)
+		if (reservation.getDReserveDate().getDay() > 5)
 		{
 			System.out.println("Invalid Reservation Date");
 			ret = false;
@@ -94,14 +98,14 @@ public class ReservationDaoImpl implements ReservationDao {
 		//check if repeating date is valid
 		if (!reservation.getRepeating().isEmpty())
 		{
-			if (reservation.getDReservationDate().compareTo(reservation.getDRepeatTo()) >=0)
+			if (reservation.getDReserveDate().compareTo(reservation.getDRepeatTo()) >=0)
 			{
 				System.out.println("Invalid repeat to");
 				ret = false;
 			}
 		}
 		
-		System.out.println(reservation.getDReservationDate()+ "dateformat");
+		System.out.println(reservation.getDReserveDate()+ "dateformat");
 		System.out.println(reservation.getTTimeFrom()+"time");
 		return ret;
 	}
@@ -114,9 +118,9 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		if (reservation.getRepeating().equals("Weekly") || reservation.getRepeating().isEmpty())
 		{
-			query = "Select count(1) from DEVICE_JOURNAL where device_name = ? and reserve_date = ? and (time_from between ? and ? or time_to between ? and ?)";
-			Date startDate = reservation.getDReservationDate();
-			Date endDate = reservation.getDReservationDate();
+			query = "Select count(1) from DEVICE_JOURNAL where device_serial_no = ? and reserve_date = ? and (time_from between ? and ? or time_to between ? and ?)";
+			Date startDate = reservation.getDReserveDate();
+			Date endDate = reservation.getDReserveDate();
 			
 			if (!reservation.getRepeating().isEmpty())
 			{
@@ -129,7 +133,7 @@ public class ReservationDaoImpl implements ReservationDao {
 			while (!startDate.after(endDate))
 			{	pstmt = dataSource.getConnection().prepareStatement(query);
 				
-				pstmt.setString(1, reservation.getDeviceName());
+				pstmt.setString(1, reservation.getDeviceSerialNo());
 				pstmt.setDate(2, new java.sql.Date(startDate.getTime()));
 				pstmt.setTime(3, reservation.getTTimeFrom());
 				pstmt.setTime(4, reservation.getTTimeTo());
@@ -143,10 +147,10 @@ public class ReservationDaoImpl implements ReservationDao {
 		}
 		else
 		{
-			query = "Select count(1) from DEVICE_JOURNAL where device_name = ? and reserve_date between ? and ? and (time_from between ? and ? or time_to between ? and ?)";
+			query = "Select count(1) from DEVICE_JOURNAL where device_serial_no = ? and reserve_date between ? and ? and (time_from between ? and ? or time_to between ? and ?)";
 			pstmt = dataSource.getConnection().prepareStatement(query);
-			pstmt.setString(1, reservation.getDeviceName());
-			pstmt.setDate(2, new java.sql.Date(reservation.getDReservationDate() .getTime()));
+			pstmt.setString(1, reservation.getDeviceSerialNo());
+			pstmt.setDate(2, new java.sql.Date(reservation.getDReserveDate() .getTime()));
 			
 			pstmt.setDate(3, new java.sql.Date(reservation.getDRepeatTo() .getTime()));
 			if (reservation.getRepeating().equals("Daily"))
@@ -170,21 +174,21 @@ public class ReservationDaoImpl implements ReservationDao {
 	@Override
 	public void create(ReservationBean reservation) throws SQLException {
 		// TODO Auto-generated method stub
-		String query = "insert into DEVICE_JOURNAL(seq_no, device_name, username, reserve_date, time_from, time_to, location, add_info) values(NULL,?,?,?,?,?,?,?)";
-		Date startDate = reservation.getDReservationDate();
-		Date endDate = reservation.getDReservationDate();
+		String query = "insert into DEVICE_JOURNAL(seq_no, device_serial_no, username, reserve_date, time_from, time_to, location, add_info) values(NULL,?,?,?,?,?,?,?)";
+		Date startDate = reservation.getDReserveDate();
+		Date endDate = reservation.getDReserveDate();
 		
 		if (!reservation.getRepeating().isEmpty())
 		{
-			reservation.getDRepeatTo();
+			endDate = reservation.getDRepeatTo();
 		}
 		
-		System.out.println(startDate+"date after");
+		System.out.println(startDate+"start date");
 
 		while (!startDate.after(endDate))
 		{	PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 			
-			pstmt.setString(1, reservation.getDeviceName());
+			pstmt.setString(1, reservation.getDeviceSerialNo());
 			pstmt.setString(2, "admin");
 			pstmt.setDate(3, new java.sql.Date(startDate.getTime()));
 			pstmt.setTime(4, reservation.getTTimeFrom());
@@ -197,31 +201,42 @@ public class ReservationDaoImpl implements ReservationDao {
 			startDate = getNextDate(reservation.getRepeating() , startDate);
 			System.out.println(startDate+"date after");
 		}
-//			
-//		
-//		Statement stmt = dataSource.getConnection().prepareStatement(query);
-//		  this.con.setAutoCommit(false);
-//	        stmt = this.con.createStatement();
-//
-//	        stmt.addBatch(
-//	            "INSERT INTO COFFEES " +
-//	            "VALUES('Amaretto', 49, 9.99, 0, 0)");
-//
-//	        stmt.addBatch(
-//	            "INSERT INTO COFFEES " +
-//	            "VALUES('Hazelnut', 49, 9.99, 0, 0)");
-//
-//	        stmt.addBatch(
-//	            "INSERT INTO COFFEES " +
-//	            "VALUES('Amaretto_decaf', 49, " +
-//	            "10.99, 0, 0)");
-//
-//	        stmt.addBatch(
-//	            "INSERT INTO COFFEES " +
-//	            "VALUES('Hazelnut_decaf', 49, " +
-//	            "10.99, 0, 0)");
-//
-//	        int [] updateCounts = stmt.executeBatch();
 	}
 
+	@Override
+	public List<ReservationBean> selectAll() {
+		
+		List<ReservationBean> reserveList = new ArrayList<ReservationBean>();
+		
+		PreparedStatement pstmt;
+		try {
+			pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no");
+		
+			try {
+				ResultSet rbSet = pstmt.executeQuery();
+				
+				while (rbSet.next()) {
+					ReservationBean rb = new ReservationBean();
+					rb.setSeqNo(rbSet.getInt(1));
+					rb.setDeviceSerialNo(rbSet.getString(2));
+					rb.setDeviceName(rbSet.getString(3));
+					rb.setUserName(rbSet.getString(4));
+					rb.setReserveDate(rbSet.getDate(5));
+					rb.setTimeFrom(rbSet.getTime(6));
+					rb.setTimeTo(rbSet.getTime(7));
+					rb.setLocation(rbSet.getString(8));
+					rb.setAddInfo(rbSet.getString(9));
+					reserveList.add(rb);
+				}
+	
+			} finally {
+				pstmt.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return reserveList;
+	}
+	
 }

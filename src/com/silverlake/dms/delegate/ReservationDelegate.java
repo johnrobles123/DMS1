@@ -3,6 +3,7 @@ package com.silverlake.dms.delegate;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.List;
 
 import com.silverlake.dms.service.ReservationService;
 import com.silverlake.dms.viewBean.ReservationBean;
@@ -31,5 +32,9 @@ public class ReservationDelegate {
 	public void create(ReservationBean reservation) throws SQLException
 	{
 		reservationService.create(reservation);
+	}
+	public List<ReservationBean> selectAll()
+	{
+		return reservationService.selectAll();
 	}
 }

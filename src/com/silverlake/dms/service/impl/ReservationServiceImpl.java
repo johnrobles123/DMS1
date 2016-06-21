@@ -1,6 +1,7 @@
 package com.silverlake.dms.service.impl;
 
 import java.util.Date;
+import java.util.List;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.DateFormat;
@@ -38,5 +39,11 @@ public class ReservationServiceImpl implements ReservationService {
 	public void create(ReservationBean reservation) throws SQLException {
 		// TODO Auto-generated method stub
 		reservationDao.create(reservation);
+	}
+
+	@Override
+	public List<ReservationBean> selectAll() {
+		// TODO Auto-generated method stub
+		return reservationDao.selectAll();
 	}
 }

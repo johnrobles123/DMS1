@@ -8,8 +8,9 @@ import java.text.SimpleDateFormat;
 
 
 public class ReservationBean {
-	int seq_no;
+	private int seqNo;
 	private String deviceName;
+	private String deviceSerialNo;
 	private String userName;
 	private String reserveDate;
 	
@@ -63,6 +64,13 @@ public class ReservationBean {
 	public void setTimeFrom(String timeFrom) {
 		this.timeFrom = timeFrom;
 	}
+	public void setTimeFrom(Time timeFrom) {
+		SimpleDateFormat format = new SimpleDateFormat("hh:mm a"); //if 24 hour format
+		
+		this.timeFrom = format.format(timeFrom);
+	}
+	
+	
 	public String getTimeTo() {
 		return timeTo;
 	}
@@ -73,6 +81,12 @@ public class ReservationBean {
 	public void setTimeTo(String timeTo) {
 		this.timeTo = timeTo;
 	}
+	public void setTimeTo(Time timeFrom) {
+		SimpleDateFormat format = new SimpleDateFormat("hh:mm a"); //if 24 hour format
+		
+		this.timeTo = format.format(timeFrom);
+	}
+	
 	public String getRepeating() {
 		return repeating;
 	}
@@ -88,20 +102,25 @@ public class ReservationBean {
 	public void setRepeatTo(String repeatTo) {
 		this.repeatTo = repeatTo;
 	}
-	public String getDeviceName() {
-		return deviceName;
+	public String getDeviceSerialNo() {
+		return deviceSerialNo;
 	}
-	public void setDeviceName(String deviceName) {
-		this.deviceName = deviceName;
+	public void setDeviceSerialNo(String deviceName) {
+		this.deviceSerialNo = deviceName;
 	}
 	public String getReserveDate() {
 		return reserveDate;
 	}
-	public Date getDReservationDate(){
+	public Date getDReserveDate(){
 		return getDateFormat(reserveDate);
 	}
 	public void setReserveDate(String reserveDate) {
 		this.reserveDate = reserveDate;
+	}
+	
+	public void setReserveDate(Date reserveDate) {
+		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy");
+		this.reserveDate = DATE_FORMAT.format(reserveDate);;
 	}
 	public String getUserName() {
 		return userName;
@@ -124,5 +143,21 @@ public class ReservationBean {
 
 	public void setAddInfo(String addInfo) {
 		this.addInfo = addInfo;
+	}
+
+	public String getDeviceName() {
+		return deviceName;
+	}
+
+	public void setDeviceName(String deviceName) {
+		this.deviceName = deviceName;
+	}
+
+	public int getSeqNo() {
+		return seqNo;
+	}
+
+	public void setSeqNo(int seqNo) {
+		this.seqNo = seqNo;
 	}
 }
