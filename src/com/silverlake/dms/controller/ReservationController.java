@@ -68,6 +68,7 @@ public class ReservationController {
 		
 		return ret;
 	}
+	
 	@RequestMapping(value="/reserve",method=RequestMethod.GET)
 	public String display(HttpServletRequest request, HttpServletResponse response, Model model, ReservationBean reservation)
 	{

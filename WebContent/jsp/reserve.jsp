@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,24 +21,20 @@
 </head>
 <body>
 	<font color="red">${message}</font>
-		<form action="display">
-           <table>
-			<tbody>
-            <tr>
-				<td>Device Name:</td> 
-				<td>
-				</tr>
-				<tr><select name=""ddDeviceList"">
-                <td><c:forEach var="devicelist" items="${deviceList}">
-                    <option value="${devicelist.serialNo}">${devicelist.deviceName}</option>
-                </c:forEach>
-                </td>
-                <tr>
-            </select>
-            </tr>
-            </tbody>
-            </table>
-       	</form>
+        <table>
+			<tr>
+				<td>Select a Device Name :</td>
+				<td> 
+					<form action="reservedevice">
+                         <select name="reserveDeviceList">
+                             <c:forEach var="devicelist" items="${deviceList}">
+                                 <option value="${devicelist.serialNo}">${devicelist.deviceName}</option>
+                             </c:forEach>
+                         </select>
+                    </form>
+                 </td>
+			</tr>
+        </table>
 		<form id="reservationForm" method="post" action="reserve" modelAttribute="reservation">
 			<table>
 			<tbody>
