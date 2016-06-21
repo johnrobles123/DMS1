@@ -1,6 +1,5 @@
 package com.silverlake.dms.dao.impl;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,13 +8,11 @@ import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Time;
+
 
 import javax.sql.DataSource;
 
 import com.silverlake.dms.dao.ReservationDao;
-import com.silverlake.dms.viewBean.DeviceJournal;
 import com.silverlake.dms.viewBean.ReservationBean;
 
 
@@ -237,6 +234,38 @@ public class ReservationDaoImpl implements ReservationDao {
 		}
 		
 		return reserveList;
+	}
+
+	@Override
+	public ReservationBean getReservation(int seqNo) 
+	{	
+		PreparedStatement pstmt;
+		ReservationBean rb = new ReservationBean();
+		try
+		{	pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no");
+			
+			try {
+				ResultSet rbSet = pstmt.executeQuery();
+				rb.setSeqNo(rbSet.getInt(1));
+				rb.setDeviceSerialNo(rbSet.getString(2));
+				rb.setDeviceName(rbSet.getString(3));
+				rb.setUserName(rbSet.getString(4));
+				rb.setReserveDate(rbSet.getDate(5));
+				rb.setTimeFrom(rbSet.getTime(6));
+				rb.setTimeTo(rbSet.getTime(7));
+				rb.setLocation(rbSet.getString(8));
+				rb.setAddInfo(rbSet.getString(9));
+			}
+			finally 
+		 	{
+		 		pstmt.close();
+			}
+		}
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return rb;
 	}
 	
 }

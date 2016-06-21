@@ -1,12 +1,15 @@
 package com.silverlake.dms.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,15 +25,15 @@ public class ReservationController {
 	@Autowired
 	private ReservationDelegate reservationDelegate;
 	
-	@RequestMapping(value="/reserve",method=RequestMethod.GET)
-	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response, ReservationBean reservation)
-	{
-		ModelAndView model = new ModelAndView("reserve");
-		//LoginBean loginBean = new LoginBean();
-		model.addObject("reservation", reservation);
-		return model;
-	}
-	
+//	@RequestMapping(value="/reserve",method=RequestMethod.GET)
+//	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response, ReservationBean reservation)
+//	{
+//		ModelAndView model = new ModelAndView("reserve");
+//		//LoginBean loginBean = new LoginBean();
+//		model.addObject("reservation", reservation);
+//		return model;
+//	}
+//	
 	@RequestMapping(value="/reserve",method=RequestMethod.POST)
 	public String createReservation(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("reservation")  ReservationBean reservation) throws SQLException
 	{
@@ -64,5 +67,23 @@ public class ReservationController {
 		reservationDelegate.create(reservation);
 		
 		return ret;
+	}
+	@RequestMapping(value="/reserve",method=RequestMethod.GET)
+	public String display(HttpServletRequest request, HttpServletResponse response, Model model, ReservationBean reservation)
+	{
+		List<DeviceListBean> dList = new ArrayList<DeviceListBean>();
+		try {
+			//djList = deviceDelegate.selectAllData();
+			
+			dList.add(new DeviceListBean("Projector 1", "12345", "old projector"));
+			dList.add(new DeviceListBean("Projector 2", "23456", "new projector"));
+
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//model.addObject("reservation", reservation);
+		model.addAttribute("deviceList", dList);
+		return "reserve";
 	}
 }

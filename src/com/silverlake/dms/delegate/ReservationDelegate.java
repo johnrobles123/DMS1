@@ -37,4 +37,8 @@ public class ReservationDelegate {
 	{
 		return reservationService.selectAll();
 	}
+	public ReservationBean getReservation(int seqNo)
+	{
+		return reservationService.getReservation(seqNo);
+	}
 }

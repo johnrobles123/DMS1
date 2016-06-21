@@ -21,12 +21,28 @@
 </head>
 <body>
 	<font color="red">${message}</font>
+		<form action="display">
+           <table>
+			<tbody>
+            <tr>
+				<td>Device Name:</td> 
+				<td>
+				</tr>
+				<tr><select name=""ddDeviceList"">
+                <td><c:forEach var="devicelist" items="${deviceList}">
+                    <option value="${devicelist.serialNo}">${devicelist.deviceName}</option>
+                </c:forEach>
+                </td>
+                <tr>
+            </select>
+            </tr>
+            </tbody>
+            </table>
+       	</form>
 		<form id="reservationForm" method="post" action="reserve" modelAttribute="reservation">
 			<table>
 			<tbody>
-				<tr>
-				<td>Device Name:</td> <td><input type="text" name="deviceName" id="deviceName" size="30" maxlength="255" required/></td>
-				</tr>
+				
 				<tr>
 				<td>Reservation Date:</td> <td><input type="text" name="reserveDate" class="datepicker" size="30"maxlength="10" required/></td>
 				</tr>
@@ -70,7 +86,7 @@
 				<tr>
 				<td>Repeat: </td> <td><select name="repeating"> <option></option> <option>Daily</option> <option>Weekly</option>  </select></td>
 				
-				<td>Until: </td>  <td><input type="text" name="repeatTo" class="datepicker" size="50"maxlength="10" /></td>
+				<td>Until: </td>  <td><input type="text" name="repeatTo" class="datepicker" size="50" maxlength="10"></td>
 				</tr>
 				<tr>				
 				<td>Location: </td> <td><input name="location" id="location"/></td>

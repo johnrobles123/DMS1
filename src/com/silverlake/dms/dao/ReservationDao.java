@@ -12,4 +12,5 @@ public interface ReservationDao {
 	public boolean isOverlap(ReservationBean reservation) throws SQLException;
 	public void create(ReservationBean reservation) throws SQLException;
 	public List<ReservationBean> selectAll();
+	public ReservationBean getReservation(int seqNo);
 }

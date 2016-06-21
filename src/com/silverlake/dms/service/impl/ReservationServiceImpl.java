@@ -46,4 +46,9 @@ public class ReservationServiceImpl implements ReservationService {
 		// TODO Auto-generated method stub
 		return reservationDao.selectAll();
 	}
+
+	@Override
+	public ReservationBean getReservation(int seqNo) {
+		return reservationDao.getReservation(seqNo);
+	}
 }
