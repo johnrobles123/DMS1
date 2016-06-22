@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page session="false"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
+<spring:url value="/reserve" var="reserveActionUrl" />
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create New Reservation</title>
@@ -21,26 +28,40 @@
 </head>
 <body>
 	<font color="red">${message}</font>
-        <table>
-			<tr>
-				<td>Select a Device Name :</td>
-				<td> 
-					<form action="reservedevice">
-                         <select name="reserveDeviceList">
-                             <c:forEach var="devicelist" items="${deviceList}">
-                                 <option value="${devicelist.serialNo}">${devicelist.deviceName}</option>
-                             </c:forEach>
-                         </select>
-                    </form>
-                 </td>
-			</tr>
-        </table>
-		<form id="reservationForm" method="post" action="reserve" modelAttribute="reservation">
+		
+		<form:form class="form-horizontal" method="post" modelAttribute="reservation" action="${reserveActionUrl}">
+	        <table>
+				<tr>
+					<td>Select a Device Name :</td>
+					<td> 
+						<form action="reservedevice">
+	                         <select name="reserveDeviceList">
+	                             <c:forEach var="devicelist" items="${deviceList}">
+	                                 <option value="${devicelist.serialNo}">${devicelist.deviceName}</option>
+	                             </c:forEach>
+	                         </select>
+	                    </form>
+	                 </td>
+				</tr>
+	        </table>
+
+			<form:hidden path="seqNo" />
+			
 			<table>
 			<tbody>
-				
-				<tr>
-				<td>Reservation Date:</td> <td><input type="text" name="reserveDate" class="datepicker" size="30"maxlength="10" required/></td>
+				<tr>					
+					<td>Reservation Date:</td> 
+					<td>
+						<spring:bind path="reserveDate">
+							<div class="form-group ${status.error ? 'has-error' : ''}">
+								<label class="col-sm-2 control-label">Name</label>
+								<div class="col-sm-10">
+									<form:input path="reserveDate" type="text" class="datepicker " id="reserveDate" size="30" maxlength="10" placeholder="ReserveDate" required="true" />
+									<form:errors path="reserveDate" class="control-label" />
+								</div>
+							</div>
+						</spring:bind>
+					</td>
 				</tr>
 			</tbody>
 			<tbody>
@@ -96,6 +117,6 @@
 				</tr>
 			</tbody>
 			</table>
-		</form>
+		</form:form>
 </body>
 </html>

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -86,5 +87,17 @@ public class ReservationController {
 		//model.addObject("reservation", reservation);
 		model.addAttribute("deviceList", dList);
 		return "reserve";
+	}
+	
+	@RequestMapping(value = "/reserve/{seqNo}/update", method = RequestMethod.GET)
+	public String showUpdateReservationForm(@PathVariable("seqNo") int seqNo, Model model) {
+
+		//logger.debug("showUpdateUserForm() : {}", id);
+
+		ReservationBean reserve = reservationDelegate.getReservation(seqNo);
+		model.addAttribute("reservation", reserve);
+		
+		return "reserve";
+
 	}
 }

@@ -188,25 +188,25 @@
 							</tr>
 						</thead>
 			
-						<c:forEach var="user" items="${deviceJournal}">
+						<c:forEach var="dj" items="${deviceJournal}">
 						    <tr>
-								<td width="10%">${user.seqNo}</td>
-								<td width="15%">${user.deviceName}</td>
-								<td width="15%">${user.userName}</td>
-								<td width="10%">${user.reserveDate}</td>
-								<td width="10%">${user.timeFrom}</td>
-								<td width="10%">${user.timeTo}</td>
+								<td width="10%">${dj.seqNo}</td>
+								<td width="15%">${dj.deviceName}</td>
+								<td width="15%">${dj.userName}</td>
+								<td width="10%">${dj.reserveDate}</td>
+								<td width="10%">${dj.timeFrom}</td>
+								<td width="10%">${dj.timeTo}</td>
 								<td width="30%">
-								  <spring:url value="/reserve/${user.seqNo}" var="userUrl" />
-								  <spring:url value="/reserve/${user.seqNo}/delete" var="deleteUrl" /> 
-								  <spring:url value="/reserve/${user.seqNo}/update" var="updateUrl" />
+								  <spring:url value="/reserve/${dj.seqNo}" var="queryReserveUrl" />
+								  <spring:url value="/reserve/${dj.seqNo}/update" var="updateReservationUrl" /> 
+								  <spring:url value="/reserve/${dj.seqNo}/return" var="returnDeviceUrl" />
 				
 								  <button class="btn btn-info" 
-				                                          onclick="location.href='${userUrl}'">Query</button>
+				                                          onclick="location.href='${queryReserveUrl}'">Query</button>
 								  <button class="btn btn-primary" 
-				                                          onclick="location.href='${updateUrl}'">Update</button>
+				                                          onclick="location.href='${updateReservationUrl}'">Update</button>
 								  <button class="btn btn-danger" 
-				                                          onclick="this.disabled=true;post('${deleteUrl}')">Delete</button>
+				                                          onclick="this.disabled=true;post('${deleteReservationUrl}')">Delete</button>
 				                </td>
 						    </tr>
 						</c:forEach>

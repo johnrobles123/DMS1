@@ -239,22 +239,31 @@ public class ReservationDaoImpl implements ReservationDao {
 	@Override
 	public ReservationBean getReservation(int seqNo) 
 	{	
-		PreparedStatement pstmt;
 		ReservationBean rb = new ReservationBean();
+		PreparedStatement pstmt;
+
 		try
-		{	pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no");
+		{	
+			pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND a.seq_no = ?");
+			pstmt.setInt(1, seqNo);
 			
 			try {
 				ResultSet rbSet = pstmt.executeQuery();
-				rb.setSeqNo(rbSet.getInt(1));
-				rb.setDeviceSerialNo(rbSet.getString(2));
-				rb.setDeviceName(rbSet.getString(3));
-				rb.setUserName(rbSet.getString(4));
-				rb.setReserveDate(rbSet.getDate(5));
-				rb.setTimeFrom(rbSet.getTime(6));
-				rb.setTimeTo(rbSet.getTime(7));
-				rb.setLocation(rbSet.getString(8));
-				rb.setAddInfo(rbSet.getString(9));
+				
+				while (rbSet.next()) {
+					rb.setSeqNo(rbSet.getInt(1));
+					rb.setDeviceSerialNo(rbSet.getString(2));
+					rb.setDeviceName(rbSet.getString(3));
+					rb.setUserName(rbSet.getString(4));
+					rb.setReserveDate(rbSet.getDate(5));
+					rb.setTimeFrom(rbSet.getTime(6));
+					rb.setTimeTo(rbSet.getTime(7));
+					rb.setLocation(rbSet.getString(8));
+					rb.setAddInfo(rbSet.getString(9));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 			finally 
 		 	{
