@@ -1,8 +1,6 @@
 package com.silverlake.dms.dao;
 
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.List;
 
 import com.silverlake.dms.viewBean.ReservationBean;

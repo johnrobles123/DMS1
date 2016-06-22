@@ -10,6 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
+
+
+
 import javax.sql.DataSource;
 
 import com.silverlake.dms.dao.ReservationDao;
@@ -19,6 +22,7 @@ import com.silverlake.dms.viewBean.ReservationBean;
 public class ReservationDaoImpl implements ReservationDao {
 	private static final Calendar Calendar = null;
 	DataSource dataSource;
+	@SuppressWarnings("static-access")
 	public static Date addDays(Date date, int days) {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(date);
@@ -27,6 +31,7 @@ public class ReservationDaoImpl implements ReservationDao {
         return cal.getTime();
     }
 	
+	@SuppressWarnings("deprecation")
 	private Date getNextDate(String repeat, Date startDate)
 	{	
 	 	Date date = startDate;
@@ -67,6 +72,7 @@ public class ReservationDaoImpl implements ReservationDao {
 			this.dataSource = dataSource;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean isValidRange(ReservationBean reservation) throws SQLException {
 		boolean ret = true;
@@ -136,6 +142,7 @@ public class ReservationDaoImpl implements ReservationDao {
 				pstmt.setTime(4, reservation.getTTimeTo());
 				pstmt.setTime(5, reservation.getTTimeFrom());
 				pstmt.setTime(6, reservation.getTTimeTo());
+				pstmt.setInt(7, reservation.getSeqNo());
 				pstmt.execute();
 				
 				startDate = getNextDate(reservation.getRepeating() , startDate);
@@ -144,7 +151,7 @@ public class ReservationDaoImpl implements ReservationDao {
 		}
 		else
 		{
-			query = "Select count(1) from DEVICE_JOURNAL where device_serial_no = ? and reserve_date between ? and ? and (time_from between ? and ? or time_to between ? and ?)";
+			query = "Select count(1) from DEVICE_JOURNAL where device_serial_no = ? and reserve_date between ? and ? and (time_from between ? and ? or time_to between ? and ? and seq_no <> ?)";
 			pstmt = dataSource.getConnection().prepareStatement(query);
 			pstmt.setString(1, reservation.getDeviceSerialNo());
 			pstmt.setDate(2, new java.sql.Date(reservation.getDReserveDate() .getTime()));
@@ -156,6 +163,7 @@ public class ReservationDaoImpl implements ReservationDao {
 				pstmt.setTime(5, reservation.getTTimeTo());
 				pstmt.setTime(6, reservation.getTTimeFrom());
 				pstmt.setTime(7, reservation.getTTimeTo());
+				pstmt.setInt(8, reservation.getSeqNo());
 			}
 			ResultSet resultSet = pstmt.executeQuery();
 			if (resultSet.next())
@@ -172,6 +180,37 @@ public class ReservationDaoImpl implements ReservationDao {
 	public void create(ReservationBean reservation) throws SQLException {
 		// TODO Auto-generated method stub
 		String query = "insert into DEVICE_JOURNAL(seq_no, device_serial_no, username, reserve_date, time_from, time_to, location, add_info) values(NULL,?,?,?,?,?,?,?)";
+		Date startDate = reservation.getDReserveDate();
+		Date endDate = reservation.getDReserveDate();
+		
+		if (!reservation.getRepeating().isEmpty())
+		{
+			endDate = reservation.getDRepeatTo();
+		}
+		
+		System.out.println(startDate+"start date");
+
+		while (!startDate.after(endDate))
+		{	PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+			
+			pstmt.setString(1, reservation.getDeviceSerialNo());
+			pstmt.setString(2, "admin");
+			pstmt.setDate(3, new java.sql.Date(startDate.getTime()));
+			pstmt.setTime(4, reservation.getTTimeFrom());
+			System.out.println(reservation.getTTimeTo()+"timeto");
+			pstmt.setTime(5, reservation.getTTimeTo());
+			pstmt.setString(6, reservation.getLocation() );
+			pstmt.setString(7, reservation.getAddInfo());
+			
+			pstmt.execute();
+			startDate = getNextDate(reservation.getRepeating() , startDate);
+			System.out.println(startDate+"date after");
+		}
+	}
+
+	public void update(ReservationBean reservation) throws SQLException {
+		// TODO Auto-generated method stub
+		String query = "Update reservation_journal";
 		Date startDate = reservation.getDReserveDate();
 		Date endDate = reservation.getDReserveDate();
 		

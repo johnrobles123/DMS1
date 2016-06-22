@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.silverlake.dms.dao.ReservationDao;
 import com.silverlake.dms.delegate.ReservationDelegate;
 import com.silverlake.dms.viewBean.*;
 
@@ -39,8 +36,6 @@ public class ReservationController {
 	public String createReservation(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("reservation")  ReservationBean reservation) throws SQLException
 	{
 		String ret = null;
-		ModelAndView model= null;  
-		
 		try
 		{
 			boolean isValidRange = reservationDelegate.isValidRange( reservation);
@@ -53,7 +48,6 @@ public class ReservationController {
 			}
 			else
 			{
-				model = new ModelAndView("reservation");
 				request.setAttribute("message", "Invalid credentials!!");
 			}
 			
