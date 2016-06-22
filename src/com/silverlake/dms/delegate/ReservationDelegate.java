@@ -39,4 +39,9 @@ public class ReservationDelegate {
 	{
 		return reservationService.getReservation(seqNo);
 	}
+	public void updateReservation(ReservationBean reservation) throws SQLException
+	{
+		reservationService.updateReservation(reservation);
+	}
+	
 }

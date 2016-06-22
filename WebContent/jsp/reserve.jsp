@@ -29,7 +29,7 @@
 <body>
 	<font color="red">${message}</font>
 	<form:form class="form-horizontal" method="post" modelAttribute="reservation" action="${reserveActionUrl}">
-		<form:hidden path="seqNo" />
+	    <form:hidden path="seqNo" />
 	    <table>
 	    <tbody>
 	    	<tr>
@@ -39,7 +39,7 @@
 						<c:forEach items="${deviceList}" var="dl" varStatus="status">
 							<c:choose>
 								<c:when test="${dl.serialNo eq reservation.deviceSerialNo}">
-									<option value="${dl.serialNo}" selected="true">${dl.deviceName}</option>
+									<option value="${dl.serialNo}" selected>${dl.deviceName}</option>
 								</c:when>
 								<c:otherwise>
 									<option value="${dl.serialNo}">${dl.deviceName}</option>
@@ -57,32 +57,30 @@
 				<spring:bind path="reserveDate">
 			            <div class="form-group ${status.error ? 'has-error' : ''}">
 			                   <div class="col-sm-10">
-			                          <form:input path="reserveDate" type="text" class="datepicker " id="reserveDate" size="30" maxlength="10" placeholder="ReserveDate" required="true" />
+			                          <form:input path="reserveDate" type="Date" class="datepicker " id="reserveDate" size="30" maxlength="10" placeholder="ReserveDate" required="true" />
 			                          <form:errors path="reserveDate" class="control-label" />
 			                   </div>
 			            </div>
 			     </spring:bind>
-			             </td>
-		      </tr>
+			</td>
+		    </tr>
 		</tbody>
 		<tbody>
 		    <tr>
 		    <td>From time:</td> 
-		    <td><select name="timeFrom">
-		              <option value="8:00 AM" label="8:00 AM" /><option value="8:30 AM" label="8:30 AM" />
-		              <option value="9:00 AM" label="9:00 AM" /><option value="9:30 AM" label="9:30 AM" />
-		              <option value="10:00 AM" label="10:00 AM" /><option value="10:30 AM" label="10:30 AM" />
-		              <option value="11:00 AM" label="11:00 AM" /><option value="11:30 AM" label="11:30 AM" />
-		              <option value="12:00 PM" label="12:00 PM" /><option value="12:30 PM" label="12:30 PM" />
-		              <option value="1:00 PM" label="1:00 PM" /><option value="1:30 PM" label="1:30 PM" />
-		              <option value="2:00 PM" label="2:00 PM" /><option value="2:30 PM" label="2:30 PM" />
-		              <option value="3:00 PM" label="3:00 PM" /><option value="3:30 PM" label="3:30 PM" />
-		              <option value="4:00 PM" label="4:00 PM" /><option value="4:30 PM" label="4:30 PM" />
-		              <option value="5:00 PM" label="5:00 PM" /><option value="5:30 PM" label="5:30 PM" />
-		              <option value="6:00 PM" label="6:00 PM" /><option value="6:30 PM" label="6:30 PM" />
-		              <option value="7:00 PM" label="7:00 PM" /><option value="7:30 PM" label="7:30 PM" />
-		              <option value="8:00 PM" label="8:00 PM" />
-		           </select>
+		    <td>
+		    	<form:select path="timeFrom">
+					<c:forEach items="${tfList}" var="tf" varStatus="status">
+						<c:choose>
+							<c:when test="${tf == reservation.timeFrom}">
+								<option value="${tf}" selected>${tf}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${tf}">${tf}</option>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</form:select>
 		    </td>
 		    <td>To time: </td> 
 		    <td><select name="timeTo">
@@ -106,12 +104,29 @@
 	        
 	        <td>Until: </td>  <td><input type="text" name="repeatTo" class="datepicker" size="50" maxlength="10"></td>
 	        </tr>
-	        <tr>                       
-	        <td>Location: </td> <td><input name="location" id="location"/></td>
+	        <tr>      
+	        <td>Location: </td>
+	        <td><spring:bind path="location">
+				<div class="form-group ${status.error ? 'has-error' : ''}">
+					<div class="col-sm-10">
+						<form:input path="location" type="text" id="location" size="30" maxlength="255" placeholder="Location" required="false" />
+			            <form:errors path="reserveDate" class="control-label" />
+					</div>
+				</div>
+			    </spring:bind></td>
 	        </tr>
 	        <tr>
 	        <tr>
-	        <td>Additional Information:</td> <td><input name="addInfo" id="addInfo"/></td>
+	        <td>Additional Information:</td>
+	        <td><spring:bind path="addInfo">
+				<div class="form-group ${status.error ? 'has-error' : ''}">
+					<div class="col-sm-10">
+						<form:input path="addInfo" type="text" id="addInfo" size="30" maxlength="255" placeholder="AddInfo" required="false" />
+			            <form:errors path="addInfo" class="control-label" />
+					</div>
+				</div>
+			    </spring:bind>
+			</td>
 	        </tr>
 	        <tr>
 	        <td><input type="submit" value="Submit" />      </td>

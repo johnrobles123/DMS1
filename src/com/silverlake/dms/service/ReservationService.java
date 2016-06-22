@@ -12,4 +12,5 @@ public interface  ReservationService {
 	public void create(ReservationBean reservation) throws SQLException;
 	public List<ReservationBean> selectAll();
 	public ReservationBean getReservation(int seqNo);
+	public void updateReservation(ReservationBean reservation) throws SQLException;
 }

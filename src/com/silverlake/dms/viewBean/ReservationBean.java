@@ -115,12 +115,12 @@ public class ReservationBean {
 		return getDateFormat(reserveDate);
 	}
 	public void setReserveDate(String reserveDate) {
-		this.reserveDate = reserveDate;
+		//this.reserveDate = reserveDate;
 	}
 	
 	public void setReserveDate(Date reserveDate) {
 		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy");
-		this.reserveDate = DATE_FORMAT.format(reserveDate);;
+		this.reserveDate = DATE_FORMAT.format(reserveDate);
 	}
 	public String getUserName() {
 		return userName;

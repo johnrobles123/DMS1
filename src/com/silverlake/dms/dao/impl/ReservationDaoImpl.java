@@ -79,7 +79,7 @@ public class ReservationDaoImpl implements ReservationDao {
 		//check if time range is valid
 		System.out.println(reservation.getTTimeFrom()+"isvalid timefrom");
 		System.out.println(reservation.getTTimeTo()+"isvalid timeto");
-		if (reservation.getReserveDate().isEmpty() ||
+		if (//reservation.getReserveDate().isEmpty ||
 			reservation.getTimeFrom().isEmpty() ||
 			reservation.getTimeTo().isEmpty()||
 			reservation.getDeviceSerialNo().isEmpty())
@@ -178,7 +178,6 @@ public class ReservationDaoImpl implements ReservationDao {
 
 	@Override
 	public void create(ReservationBean reservation) throws SQLException {
-		// TODO Auto-generated method stub
 		String query = "insert into DEVICE_JOURNAL(seq_no, device_serial_no, username, reserve_date, time_from, time_to, location, add_info) values(NULL,?,?,?,?,?,?,?)";
 		Date startDate = reservation.getDReserveDate();
 		Date endDate = reservation.getDReserveDate();
@@ -314,6 +313,22 @@ public class ReservationDaoImpl implements ReservationDao {
 			e.printStackTrace();
 		}
 		return rb;
+	}
+	@Override
+	public void updateReservation(ReservationBean reservation) throws SQLException
+	{	String query = "update DEVICE_JOURNAL set reserve_date = ? , time_from = ?, time_to = ?, location = ?, add_info = ? where seq_no = ?";
+	
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		
+		pstmt.setDate(1, new java.sql.Date(reservation.getDReserveDate().getTime()));
+		pstmt.setTime(2, reservation.getTTimeFrom());
+		pstmt.setTime(3, reservation.getTTimeTo());
+		pstmt.setString(4, reservation.getLocation() );
+		pstmt.setString(5, reservation.getAddInfo());
+		pstmt.setInt(6, reservation.getSeqNo());
+		
+		pstmt.execute();
+
 	}
 	
 }

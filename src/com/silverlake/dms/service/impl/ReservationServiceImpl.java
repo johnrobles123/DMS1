@@ -45,4 +45,10 @@ public class ReservationServiceImpl implements ReservationService {
 	public ReservationBean getReservation(int seqNo) {
 		return reservationDao.getReservation(seqNo);
 	}
+
+	@Override
+	public void updateReservation(ReservationBean reservation)
+			throws SQLException {
+		reservationDao.updateReservation(reservation);
+	}
 }

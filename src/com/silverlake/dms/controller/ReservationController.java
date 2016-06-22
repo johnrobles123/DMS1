@@ -19,6 +19,7 @@ import com.silverlake.dms.delegate.ReservationDelegate;
 import com.silverlake.dms.viewBean.*;
 
 @Controller
+@RequestMapping("/")
 public class ReservationController {
 	
 	@Autowired
@@ -67,7 +68,7 @@ public class ReservationController {
 	
 	@RequestMapping(value="/reserve",method=RequestMethod.GET)
 	public String display(HttpServletRequest request, HttpServletResponse response, Model model, ReservationBean reservation)
-	{
+	{	ReservationBean reserve = new ReservationBean();
 		List<DeviceListBean> dList = new ArrayList<DeviceListBean>();
 		try {
 			//djList = deviceDelegate.selectAllData();
@@ -81,6 +82,7 @@ public class ReservationController {
 		}
 		//model.addObject("reservation", reservation);
 		model.addAttribute("deviceList", dList);
+		model.addAttribute("reservation", reserve);
 		return "reserve";
 	}
 	
@@ -89,13 +91,35 @@ public class ReservationController {
 
 		//logger.debug("showUpdateUserForm() : {}", id);
 		List<DeviceListBean> dList = new ArrayList<DeviceListBean>();
-
+		List<String> tfList = new ArrayList<String>();
+		
+		tfList.add("8:00 AM");tfList.add("8:30 AM");tfList.add("9:00 AM");tfList.add("9:30 AM");
 		ReservationBean reserve = reservationDelegate.getReservation(seqNo);
 		dList.add(new DeviceListBean("Projector 1", "12345", "old projector"));
 		dList.add(new DeviceListBean("Projector 2", "23456", "new projector"));
 		
 		model.addAttribute("deviceList", dList);
 		model.addAttribute("reservation", reserve);
+		model.addAttribute("tfList", tfList);
+		
+		return "reserve";
+
+	}
+	@RequestMapping(value = "/reserve/update", method = RequestMethod.POST)
+	public String UpdateReservation( HttpServletRequest request, HttpServletResponse response, @ModelAttribute("reservation")  ReservationBean reservation) {
+		try
+		{
+			if (!reservationDelegate.isOverlap(reservation))
+			{
+			}
+			
+			reservationDelegate.updateReservation(reservation);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		
 		return "reserve";
 
