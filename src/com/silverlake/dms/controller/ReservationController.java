@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.silverlake.dms.delegate.ReservationDelegate;
 import com.silverlake.dms.viewBean.*;
 
@@ -87,8 +88,13 @@ public class ReservationController {
 	public String showUpdateReservationForm(@PathVariable("seqNo") int seqNo, Model model) {
 
 		//logger.debug("showUpdateUserForm() : {}", id);
+		List<DeviceListBean> dList = new ArrayList<DeviceListBean>();
 
 		ReservationBean reserve = reservationDelegate.getReservation(seqNo);
+		dList.add(new DeviceListBean("Projector 1", "12345", "old projector"));
+		dList.add(new DeviceListBean("Projector 2", "23456", "new projector"));
+		
+		model.addAttribute("deviceList", dList);
 		model.addAttribute("reservation", reserve);
 		
 		return "reserve";
