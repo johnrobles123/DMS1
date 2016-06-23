@@ -35,7 +35,8 @@ public class ReservationController {
 //	}
 //	
 	@RequestMapping(value="/reserve",method=RequestMethod.POST)
-	public String createReservation(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("reservation")  ReservationBean reservation) throws SQLException
+	
+	public String createUpdateReservation(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("reservation")  ReservationBean reservation) throws SQLException
 	{
 		String ret = null;
 		try
@@ -61,7 +62,14 @@ public class ReservationController {
 		{
 			e.printStackTrace();
 		}
-		reservationDelegate.create(reservation);
+		
+		System.out.println(reservation.getSeqNo()+"seq no");
+		if (reservation.getSeqNo() == 0) 
+			reservationDelegate.create(reservation);
+		else
+			System.out.println(reservation.getReserveDate()+"reserve");
+		System.out.println(reservation.getDeviceSerialNo()+"device");
+			reservationDelegate.updateReservation(reservation);
 		
 		return ret;
 	}
@@ -70,6 +78,12 @@ public class ReservationController {
 	public String display(HttpServletRequest request, HttpServletResponse response, Model model, ReservationBean reservation)
 	{	ReservationBean reserve = new ReservationBean();
 		List<DeviceListBean> dList = new ArrayList<DeviceListBean>();
+		List<String> tfList = new ArrayList<String>();
+		List<String> ttList = new ArrayList<String>();
+		
+		tfList.add("08:00 AM");tfList.add("08:30 AM");tfList.add("09:00 AM");tfList.add("09:30 AM");
+		ttList.add("08:29 AM");ttList.add("08:59 AM");ttList.add("09:29 AM");ttList.add("09:59 AM");
+		
 		try {
 			//djList = deviceDelegate.selectAllData();
 			
@@ -80,9 +94,12 @@ public class ReservationController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		//model.addObject("reservation", reservation);
 		model.addAttribute("deviceList", dList);
 		model.addAttribute("reservation", reserve);
+		model.addAttribute("fromList", tfList);
+		model.addAttribute("toList", ttList);
 		return "reserve";
 	}
 	
@@ -92,34 +109,19 @@ public class ReservationController {
 		//logger.debug("showUpdateUserForm() : {}", id);
 		List<DeviceListBean> dList = new ArrayList<DeviceListBean>();
 		List<String> tfList = new ArrayList<String>();
+		List<String> ttList = new ArrayList<String>();
 		
-		tfList.add("8:00 AM");tfList.add("8:30 AM");tfList.add("9:00 AM");tfList.add("9:30 AM");
+		tfList.add("08:00 AM");tfList.add("08:30 AM");tfList.add("09:00 AM");tfList.add("09:30 AM");
+		ttList.add("08:29 AM");ttList.add("08:59 AM");ttList.add("09:29 AM");ttList.add("09:59 AM");
+		
 		ReservationBean reserve = reservationDelegate.getReservation(seqNo);
 		dList.add(new DeviceListBean("Projector 1", "12345", "old projector"));
 		dList.add(new DeviceListBean("Projector 2", "23456", "new projector"));
 		
 		model.addAttribute("deviceList", dList);
 		model.addAttribute("reservation", reserve);
-		model.addAttribute("tfList", tfList);
-		
-		return "reserve";
-
-	}
-	@RequestMapping(value = "/reserve/update", method = RequestMethod.POST)
-	public String UpdateReservation( HttpServletRequest request, HttpServletResponse response, @ModelAttribute("reservation")  ReservationBean reservation) {
-		try
-		{
-			if (!reservationDelegate.isOverlap(reservation))
-			{
-			}
-			
-			reservationDelegate.updateReservation(reservation);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		
+		model.addAttribute("fromList", tfList);
+		model.addAttribute("toList", ttList);
 		
 		return "reserve";
 
