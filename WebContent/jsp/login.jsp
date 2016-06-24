@@ -21,9 +21,9 @@
 				<div class="errormsg">${message}</div>
 				<form id="loginForm" method="post" action="login" modelAttribute="loginBean" class="login-form">
 					<label path="username">Enter your user-name</label>
-					<input id="username iconified" class="form-control empty" name="username" path="" placeholder="&#xf007 Username"/><br>
+					<input id="username iconified" class="empty" name="username" path="" placeholder="&#xf007 Username" required/><br>
 					<label path="username">Please enter your password</label>
-					<input id="password iconified" class="form-control empty" name="password" path="" placeholder="&#xf084 Password"/><br>
+					<input type="password" id="password iconified" class="empty" name="password" path="" placeholder="&#xf084 Password" required/><br>
 					<button type="submit" value="Submit" />login</button>
 				</form>
 			</div>

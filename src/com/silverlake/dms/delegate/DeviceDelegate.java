@@ -1,8 +1,6 @@
 package com.silverlake.dms.delegate;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.silverlake.dms.service.DeviceJournalService;

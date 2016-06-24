@@ -1,15 +1,27 @@
 package com.silverlake.dms.viewBean;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "device_list")
 public class DeviceListBean {
 	
 	private String deviceName;
+	
+	@Id
 	private String serialNo;
+	
 	private String additionalInfo;
 	
 	public DeviceListBean (String deviceName, String serialNo, String additionalInfo) {
 		this.deviceName = deviceName; 
 		this.serialNo = serialNo;
 		this.additionalInfo = additionalInfo;
+	}
+
+	public DeviceListBean() {
 	}
 
 	public String getDeviceName() {

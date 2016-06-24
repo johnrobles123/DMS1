@@ -4,7 +4,9 @@
 package com.silverlake.dms.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
+import com.silverlake.dms.viewBean.DeviceListBean;
 import com.silverlake.dms.viewBean.User;
 
 /**
@@ -20,4 +22,7 @@ public interface UserService
 		public void update(User addUser) throws SQLException;
 		
 		public void delete(String id) throws SQLException;
+		
+		public List<User> fetchAllUserList() throws SQLException;
+
 }

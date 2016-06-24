@@ -78,7 +78,7 @@
 			
 					<h1>Device Schedule</h1>
 			
-					<table id="devicejournaltable" style="width:100%">
+					<table id="devicejournaltable" class="fullwidth">
 						<thead>
 							<tr>
 								<th>Seq No</th>

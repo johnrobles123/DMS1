@@ -3,10 +3,13 @@ package com.silverlake.dms.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import com.silverlake.dms.dao.UserDao;
+import com.silverlake.dms.viewBean.User;
 import com.silverlake.dms.viewBean.User;
 
 /**
@@ -68,5 +71,35 @@ public class UserDaoImpl implements UserDao {
 	public void delete(String id) throws SQLException {
 		// TODO Auto-generated method stub
 
+	}
+	
+	private static final String SELECT_QUERY = "select id, username, password from login";
+
+	public List<User> selectAll() {
+		List<User> user = new ArrayList<User>();
+		
+		PreparedStatement pstmt;
+		try {
+			pstmt = dataSource.getConnection().prepareStatement(SELECT_QUERY);
+		
+			try {
+				ResultSet ulSet = pstmt.executeQuery();
+				
+				while (ulSet.next()) {
+					User ul = new User();
+					ul.setId(ulSet.getInt(1));
+					ul.setuname(ulSet.getString(2));
+					ul.setpassword(ulSet.getString(3));
+					user.add(ul);
+				}
+	
+			} finally {
+				pstmt.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return user;
 	}
 }

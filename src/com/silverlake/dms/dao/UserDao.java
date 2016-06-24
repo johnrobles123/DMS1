@@ -1,9 +1,10 @@
 package com.silverlake.dms.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
+import com.silverlake.dms.viewBean.DeviceListBean;
 import com.silverlake.dms.viewBean.User;
-
 
 public interface UserDao
 {
@@ -14,4 +15,6 @@ public interface UserDao
 		public void update(User addUser) throws SQLException;
 		
 		public void delete(String id) throws SQLException;
+
+		public List<User> selectAll();
 }

@@ -1,9 +1,11 @@
 package com.silverlake.dms.service.impl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.silverlake.dms.dao.UserDao;
 import com.silverlake.dms.service.UserService;
+import com.silverlake.dms.viewBean.DeviceListBean;
 import com.silverlake.dms.viewBean.User;
 
 public class UserServiceImpl implements UserService {
@@ -38,6 +40,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(String id) throws SQLException {
 		userDao.delete(id);
+	}
+
+	@Override
+	public List<User> fetchAllUserList() throws SQLException {
+		return userDao.selectAll();
 	}
 
 }
