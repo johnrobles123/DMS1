@@ -37,13 +37,17 @@ public class DashboardController {
 	public String displayDashboard(Model model)
 	{
 		List<ReservationBean> reserveList = new ArrayList<ReservationBean>();
+		List<ReservationBean> reserveDayList = new ArrayList<ReservationBean>();
 		List<DeviceListBean> dList = new ArrayList<DeviceListBean>();
+		String deviceStatusStr = null;
 		
 		try {
 			//djList = deviceDelegate.selectAllData();
 			reserveList = reservationDelegate.selectAll();
-			dList.add(new DeviceListBean("Projector 1", "1", "old projector"));
-			dList.add(new DeviceListBean("Projector 2", "2", "new projector"));
+			deviceStatusStr = reservationDelegate.getAvailabilityStartTime("12345");
+			
+			dList.add(new DeviceListBean("Projector 1", "12345", "old projector"));
+			dList.add(new DeviceListBean("Projector 2", "23456", "new projector"));
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,6 +56,33 @@ public class DashboardController {
 		//model.addObject("deviceJournal", djList);
 		model.addAttribute("deviceJournal", reserveList);
 		model.addAttribute("deviceList", dList);
+		model.addAttribute("deviceStatus", deviceStatusStr);
+		return "dashboard";
+	}
+	
+	@RequestMapping(value="/dashboard/{serialNo}/refresh",method=RequestMethod.GET)
+	public String refreshDashboard(@PathVariable("serialNo") String serialNo, Model model) {
+		List<ReservationBean> reserveList = new ArrayList<ReservationBean>();
+		List<DeviceListBean> dList = new ArrayList<DeviceListBean>();
+		String deviceStatusStr = null;
+		
+		try {
+			//djList = deviceDelegate.selectAllData();
+			reserveList = reservationDelegate.getCurrentDayRecords(serialNo);
+			deviceStatusStr = reservationDelegate.getAvailabilityStartTime(serialNo);
+			
+			dList.add(new DeviceListBean("Projector 1", "12345", "old projector"));
+			dList.add(new DeviceListBean("Projector 2", "23456", "new projector"));
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//model.addObject("deviceJournal", djList);
+		model.addAttribute("deviceJournal", reserveList);
+		model.addAttribute("deviceList", dList);
+		model.addAttribute("deviceStatus", deviceStatusStr);
+		
 		return "dashboard";
 	}
 }

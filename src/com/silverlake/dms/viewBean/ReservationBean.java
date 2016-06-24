@@ -1,5 +1,6 @@
 package com.silverlake.dms.viewBean;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.sql.Time;
 import java.text.DateFormat;
@@ -7,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 
-public class ReservationBean {
+public class ReservationBean implements Comparable<ReservationBean> {
 	private int seqNo;
 	private String deviceName;
 	private String deviceSerialNo;
@@ -21,6 +22,38 @@ public class ReservationBean {
 	
 	private String location;
 	private String addInfo;
+	
+	public static class OrderByTimeFrom implements Comparator<ReservationBean> {
+
+		@Override
+		public int compare(ReservationBean o1, ReservationBean o2) {
+			DateFormat df = new SimpleDateFormat("hh:mm a");
+			java.sql.Time timeFrom1 = null;
+			java.sql.Time timeFrom2 = null;
+			
+			try {
+				timeFrom1 = new java.sql.Time(df.parse(o1.timeFrom).getTime());
+			    timeFrom2 = new java.sql.Time(df.parse(o2.timeFrom).getTime());
+			
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			if (timeFrom1 != null && timeFrom2 != null) {
+				if (timeFrom1.after(timeFrom2)) {
+					return 1;
+				}
+				else if (timeFrom1.before(timeFrom2)) {
+					return -1;
+				} else {
+					return 0;
+				}
+			} else {
+				return 0;
+			}
+		}
+		
+	}
 	
 	private Time getTimeFormat(String time)
 	{
@@ -159,5 +192,11 @@ public class ReservationBean {
 
 	public void setSeqNo(int seqNo) {
 		this.seqNo = seqNo;
+	}
+
+	@Override
+	public int compareTo(ReservationBean o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

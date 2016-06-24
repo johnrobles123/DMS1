@@ -117,6 +117,16 @@
 	            element.innerHTML = pagerHtml; 
 	        } 
 	    } 
+	    
+	    function ddListDeviceOnChange() {
+	        var x = document.getElementById("ddDeviceList").value;
+	        var url = "/DMS1/dashboard/" + x + "/refresh"; // get selected value
+            if (url) { // require a URL
+            	location.href = url; // redirect
+            }
+            return false;
+	     }
+
     </script> 
 	 </head>
 	 
@@ -144,9 +154,9 @@
 					<tr>
 						<td>Select a Device Name :</td>
 						<td> 
-							<form action="listdevice">
-	
-	                            <select name="ddDeviceList">
+							<form action="listdevice" >
+	                            <select id="ddDeviceList" onchange="ddListDeviceOnChange()">
+	                            	<option value="*">ALL</option>
 	                                <c:forEach var="devicelist" items="${deviceList}">
 	                                    <option value="${devicelist.serialNo}">${devicelist.deviceName}</option>
 	                                </c:forEach>
@@ -156,7 +166,7 @@
 					</tr>
 					<tr>
 						<td>Current Status :</td>
-						<td><input type="text" name="status" disabled></td>
+						<td>${deviceStatus}</td>
 					</tr>
 				</table>
 			</div>
