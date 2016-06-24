@@ -14,6 +14,7 @@
 	    <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
 	    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
 	    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
+
 	  <style type='text/css'>
 		#header {
 		    background-color:black;
@@ -128,6 +129,14 @@
 	     }
 
     </script> 
+    
+	    <spring:url value="/resources/css/style.css" var="styleCss" />
+		<spring:url value="/resources/css/font-awesome.min.css" var="fontAwesomeCss" />
+		<spring:url value="/resources/js/index.js" var="mainJs" />
+	    <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+	  	<link href="${styleCss}" rel="stylesheet" />
+	  	<link href="${fontAwesomeCss}" rel="stylesheet" />
+  	  <script src="${mainJs}"></script>  	
 	 </head>
 	 
 	 <body>		

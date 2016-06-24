@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -70,10 +71,10 @@
 		    <td>From time:</td> 
 		    <td>
 		    	<form:select path="timeFrom">
-					<c:forEach items="${tfList}" var="tf" varStatus="status">
+					<c:forEach items="${fromList}" var="tf" varStatus="status">
 						<c:choose>
-							<c:when test="${tf == reservation.timeFrom}">
-								<option value="${tf}" selected>${tf}</option>
+							<c:when test="${tf eq reservation.timeFrom}">
+								<option value="${tf}" selected="selected">${tf}</option>
 							</c:when>
 							<c:otherwise>
 								<option value="${tf}">${tf}</option>
@@ -83,21 +84,19 @@
 				</form:select>
 		    </td>
 		    <td>To time: </td> 
-		    <td><select name="timeTo">
-		              <option value="8:29 AM" label="8:29 AM" /><option value="8:59 AM" label="8:59 AM" />
-		              <option value="9:29 AM" label="9:29 AM" /><option value="9:59 AM" label="9:59 AM" />
-		              <option value="10:29 AM" label="10:29 AM" /><option value="10:59 AM" label="10:59 AM" />
-		              <option value="11:29 AM" label="11:29 AM" /><option value="11:59 AM" label="11:59 AM" />
-		              <option value="12:29 PM" label="12:29 PM" /><option value="12:59 PM" label="12:59 PM" />
-		              <option value="1:29 PM" label="1:29 PM" /><option value="1:59 PM" label="1:59 PM" />
-		              <option value="2:29 PM" label="2:29 PM" /><option value="2:59 PM" label="2:59 PM" />
-		              <option value="3:29 PM" label="3:29 PM" /><option value="3:59 PM" label="3:59 PM" />
-		              <option value="4:29 PM" label="4:29 PM" /><option value="4:59 PM" label="4:59 PM" />
-		              <option value="5:29 PM" label="5:29 PM" /><option value="5:59 PM" label="5:59 PM" />
-		              <option value="6:29 PM" label="6:29 PM" /><option value="6:59 PM" label="6:59 PM" />
-		              <option value="7:29 PM" label="7:29 PM" /><option value="7:59 PM" label="7:59 PM" />
-		              <option value="8:29 PM" label="8:29 PM" />
-		           </select></td>
+		    <td><form:select path="timeTo">
+					<c:forEach items="${toList}" var="tt" varStatus="status">
+						<c:choose>
+							<c:when test="${tt eq reservation.timeTo}">
+								<option value="${tt}" selected="selected">${tt}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${tt}">${tt}</option>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</form:select>
+			</td>
 		    </tr>
 	        <tr>
 	        <td>Repeat: </td> <td><select name="repeating"> <option></option> <option>Daily</option> <option>Weekly</option>  </select></td>
