@@ -150,7 +150,7 @@
 			  <tr>
 			    <td>Home</td>
 			    <td>My Reservations</td> 
-			    <td>Admin</td>
+			    <td><p><a href="admin">Admin</a></p></td>
 			    <td>About</td>
 			  </tr>
 			</table>
