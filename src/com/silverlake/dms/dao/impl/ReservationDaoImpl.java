@@ -243,7 +243,7 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		PreparedStatement pstmt;
 		try {
-			pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND TIMESTAMP(a.reserve_date, a.time_to) >= CURRENT_TIMESTAMP()");
+			pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND TIMESTAMP(a.reserve_date, a.time_to) >= CURRENT_TIMESTAMP() ORDER BY TIMESTAMP(a.reserve_date, a.time_to)");
 			
 			/*
 			java.util.Date utilDate = new java.util.Date();
@@ -283,10 +283,18 @@ public class ReservationDaoImpl implements ReservationDao {
 	public List<ReservationBean> selectAllByDeviceSerialNo(String deviceSerialNo) {
 		
 		List<ReservationBean> reserveList = new ArrayList<ReservationBean>();
+		StringBuilder stmt = new StringBuilder(); 
+		stmt.append("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no ");
+		
+		if (!deviceSerialNo.equalsIgnoreCase("*")) {
+			stmt.append("AND a.device_serial_no = ? ");
+		}
+		
+		stmt.append("AND TIMESTAMP(a.reserve_date, a.time_to) >= CURRENT_TIMESTAMP()");
 		
 		PreparedStatement pstmt;
 		try {
-			pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND a.device_serial_no = ? AND TIMESTAMP(a.reserve_date, a.time_to) >= CURRENT_TIMESTAMP()");
+			pstmt = dataSource.getConnection().prepareStatement(stmt.toString());
 			
 			java.util.Date utilDate = new java.util.Date();
 		    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());

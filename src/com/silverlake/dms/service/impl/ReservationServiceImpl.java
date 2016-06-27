@@ -125,15 +125,19 @@ public class ReservationServiceImpl implements ReservationService {
 		String retstr = null;
 		ReservationBean rb = new ReservationBean();
 		
-		if (isDeviceAvailable(deviceSerialNo)) {
-			rb = getNextStartTime(deviceSerialNo);
-			if (rb == null || rb.getSeqNo() == 0) {
-				retstr = "Devices are available from this point onwards";
+		if (!deviceSerialNo.equalsIgnoreCase("*")) {
+			if (isDeviceAvailable(deviceSerialNo)) {
+				rb = getNextStartTime(deviceSerialNo);
+				if (rb == null || rb.getSeqNo() == 0) {
+					retstr = "Devices are available from this point onwards";
+				} else {
+					retstr = "Device " + rb.getDeviceName() + " is available until " + rb.getTimeFrom().toString();
+				}
 			} else {
-				retstr = "Device " + rb.getDeviceName() + " is available until " + rb.getTimeFrom().toString();
+				retstr = "Device is NOT available";
 			}
 		} else {
-			retstr = "Device is NOT available";
+			retstr = null;
 		}
 		
 		return retstr;

@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ include file="header.jsp" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
 <html>
 	<head>
@@ -24,17 +25,6 @@
 	 </head>
 	 
 	 <body>		
-		<div id="header">
-			<h1>Device Monitoring System</h1>
-		</div>
-		
-		<ul id="menu">
-		  <li>Home</li>
-		  <li>My Reservations</li>
-		  <li>Admin</li>
-		  <li>About</li>
-		</ul>
-		
 		<font color="red">${message}</font>
 		
 		<div class="container">

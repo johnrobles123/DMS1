@@ -3,11 +3,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ include file="header.jsp" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
 <html>
 	<head>
 	  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	  <title>jqGrid Example</title>
+	  <title>Dashboard</title>
 	    <script type='text/javascript' src='http://code.jquery.com/jquery-1.6.2.js'></script>
 	    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
 	    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
@@ -137,25 +138,10 @@
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 	  	<link href="${styleCss}" rel="stylesheet" />
 	  	<link href="${fontAwesomeCss}" rel="stylesheet" />
-  	  <script src="${mainJs}"></script>  	
+  	  	<script src="${mainJs}"></script>
 	 </head>
 	 
-	 <body>		
-		<div id="header">
-			<h1>Device Monitoring System</h1>
-		</div>
-		
-		<div id="nav">
-			<table style="width:100%">
-			  <tr>
-			    <td>Home</td>
-			    <td>My Reservations</td> 
-			    <td><p><a href="admin">Admin</a></p></td>
-			    <td>About</td>
-			  </tr>
-			</table>
-		</div>
-		
+	 <body>				
 		<font color="red">${message}</font>
 		
 		<div id="section">
@@ -214,6 +200,7 @@
 								<th>Time From</th>
 								<th>Time To</th>
 								<th>Action</th>
+								<th align="center">Returned?</th>
 							</tr>
 						</thead>
 			
@@ -225,9 +212,10 @@
 								<td width="10%">${dj.reserveDate}</td>
 								<td width="10%">${dj.timeFrom}</td>
 								<td width="10%">${dj.timeTo}</td>
-								<td width="30%">
+								<td width="20%">
 								  <spring:url value="/reserve/${dj.seqNo}" var="queryReserveUrl" />
 								  <spring:url value="/reserve/${dj.seqNo}/update" var="updateReservationUrl" /> 
+								  <spring:url value="/reserve/${dj.seqNo}/cancel" var="cancelDeviceUrl" />
 								  <spring:url value="/reserve/${dj.seqNo}/return" var="returnDeviceUrl" />
 				
 								  <button class="btn btn-info" 
@@ -235,7 +223,11 @@
 								  <button class="btn btn-primary" 
 				                                          onclick="location.href='${updateReservationUrl}'">Update</button>
 								  <button class="btn btn-danger" 
-				                                          onclick="this.disabled=true;post('${deleteReservationUrl}')">Delete</button>
+				                                          onclick="this.disabled=true;post('${cancelReservationUrl}')">Cancel</button>
+				                </td>
+				                <td width="10%" align="center">
+								  <input type="checkbox" class="checkbox" 
+				                                          onclick="this.disabled=true;post('${returnReservationUrl}')">
 				                </td>
 						    </tr>
 						</c:forEach>

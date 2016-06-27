@@ -86,10 +86,17 @@ public class ReservationController {
 		
 		try {
 			//djList = deviceDelegate.selectAllData();
+			DeviceListBean dlb = new DeviceListBean();
+			dlb.setSerialNo("12345");
+			dlb.setDeviceName("Projector 1");
+			dlb.setAdditionalInfo("old projector");
+			dList.add(dlb);
 			
-			dList.add(new DeviceListBean("Projector 1", "12345", "old projector"));
-			dList.add(new DeviceListBean("Projector 2", "23456", "new projector"));
-
+			DeviceListBean dlb2 = new DeviceListBean();
+			dlb2.setSerialNo("23456");
+			dlb2.setDeviceName("Projector 2");
+			dlb2.setAdditionalInfo("new projector");
+			dList.add(dlb2);
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -115,8 +122,18 @@ public class ReservationController {
 		ttList.add("08:29 AM");ttList.add("08:59 AM");ttList.add("09:29 AM");ttList.add("09:59 AM");
 		
 		ReservationBean reserve = reservationDelegate.getReservation(seqNo);
-		dList.add(new DeviceListBean("Projector 1", "12345", "old projector"));
-		dList.add(new DeviceListBean("Projector 2", "23456", "new projector"));
+		
+		DeviceListBean dlb = new DeviceListBean();
+		dlb.setSerialNo("12345");
+		dlb.setDeviceName("Projector 1");
+		dlb.setAdditionalInfo("old projector");
+		dList.add(dlb);
+		
+		DeviceListBean dlb2 = new DeviceListBean();
+		dlb2.setSerialNo("23456");
+		dlb2.setDeviceName("Projector 2");
+		dlb2.setAdditionalInfo("new projector");
+		dList.add(dlb2);
 		
 		model.addAttribute("deviceList", dList);
 		model.addAttribute("reservation", reserve);

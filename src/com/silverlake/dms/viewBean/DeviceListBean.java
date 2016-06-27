@@ -1,27 +1,24 @@
 package com.silverlake.dms.viewBean;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "device_list")
+//@Entity
+//@Table(appliesTo="device_list")
+
 public class DeviceListBean {
-	
-	private String deviceName;
-	
-	@Id
-	private String serialNo;
-	
-	private String additionalInfo;
-	
-	public DeviceListBean (String deviceName, String serialNo, String additionalInfo) {
-		this.deviceName = deviceName; 
-		this.serialNo = serialNo;
-		this.additionalInfo = additionalInfo;
-	}
+	//@Id
+	//private int id;
 
-	public DeviceListBean() {
+	//@Column(name="device_name")
+	private String deviceName;
+	//@Column(name="serial_no")
+	private String serialNo;
+	//@Column(name="additional_info")
+	private String additionalInfo;
+
+	public DeviceListBean () {
+	/*	this.deviceName = deviceName; 
+		this.serialNo = serialNo;
+		this.additionalInfo = additionalInfo;*/
 	}
 
 	public String getDeviceName() {
@@ -46,5 +43,9 @@ public class DeviceListBean {
 
 	public void setAdditionalInfo(String additionalInfo) {
 		this.additionalInfo = additionalInfo;
+	}
+
+	public boolean isNew() {
+		return (this.serialNo == null);	
 	}
 }

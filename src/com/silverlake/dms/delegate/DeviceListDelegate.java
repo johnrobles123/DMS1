@@ -24,7 +24,7 @@ public class DeviceListDelegate {
 	public List<DeviceListBean> selectAllData() {
 		List<DeviceListBean> returnDeviceListBean = null;
 		try {
-			returnDeviceListBean = deviceListService.fetchAllDeviceList();
+			returnDeviceListBean = deviceListService.findAll();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

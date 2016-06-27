@@ -46,8 +46,17 @@ public class DashboardController {
 			deviceStatusStr = reservationDelegate.getAvailabilityStartTime("12345");
 			reserveList = reservationDelegate.selectAll();
 			
-			dList.add(new DeviceListBean("Projector 1", "12345", "old projector"));
-			dList.add(new DeviceListBean("Projector 2", "23456", "new projector"));
+			DeviceListBean dlb = new DeviceListBean();
+			dlb.setSerialNo("12345");
+			dlb.setDeviceName("Projector 1");
+			dlb.setAdditionalInfo("old projector");
+			dList.add(dlb);
+			
+			DeviceListBean dlb2 = new DeviceListBean();
+			dlb2.setSerialNo("23456");
+			dlb2.setDeviceName("Projector 2");
+			dlb2.setAdditionalInfo("new projector");
+			dList.add(dlb2);
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,10 +79,23 @@ public class DashboardController {
 		try {
 			//reserveList = reservationDelegate.getCurrentDayRecords(serialNo);
 			deviceStatusStr = reservationDelegate.getAvailabilityStartTime(serialNo);
-			reserveList = reservationDelegate.selectAllByDeviceSerialNo(serialNo);
+			if (serialNo.equalsIgnoreCase("*")) {
+				reserveList = reservationDelegate.selectAll();
+			} else {
+				reserveList = reservationDelegate.selectAllByDeviceSerialNo(serialNo);
+			}
 			
-			dList.add(new DeviceListBean("Projector 1", "12345", "old projector"));
-			dList.add(new DeviceListBean("Projector 2", "23456", "new projector"));
+			DeviceListBean dlb = new DeviceListBean();
+			dlb.setSerialNo("12345");
+			dlb.setDeviceName("Projector 1");
+			dlb.setAdditionalInfo("old projector");
+			dList.add(dlb);
+			
+			DeviceListBean dlb2 = new DeviceListBean();
+			dlb2.setSerialNo("23456");
+			dlb2.setDeviceName("Projector 2");
+			dlb2.setAdditionalInfo("new projector");
+			dList.add(dlb2);
 		    
 		} catch (Exception e) {
 			e.printStackTrace();

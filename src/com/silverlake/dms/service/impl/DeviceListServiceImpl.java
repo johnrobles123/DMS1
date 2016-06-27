@@ -1,50 +1,50 @@
 package com.silverlake.dms.service.impl;
 
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.silverlake.dms.dao.DeviceListDao;
 import com.silverlake.dms.service.DeviceListService;
-import com.silverlake.dms.viewBean.DeviceJournal;
 import com.silverlake.dms.viewBean.DeviceListBean;
 
+@Service("deviceListService")
 public class DeviceListServiceImpl implements DeviceListService {
 	
-	private DeviceListDao deviceListDao;
-	
-	public DeviceListDao getDeviceListDao()
-	{
-			return this.deviceListDao;
-	}
+	DeviceListDao deviceListDao;
 
-	public void setDeviceListDao(DeviceListDao deviceListDao)
-	{
-			this.deviceListDao = deviceListDao;
+	@Autowired
+	public void setDeviceListDao(DeviceListDao deviceListDao) {
+		this.deviceListDao = deviceListDao;
 	}
 	
 	@Override
-	public List<DeviceListBean> fetchAllDeviceList() throws SQLException {
-		return deviceListDao.selectAll();
-	}
-
-	@Override
-	public DeviceListBean findById(String serialNo) {
-		return null;
+	public DeviceListBean findById(String serialNo) throws SQLException {
+		//return null;
+		return deviceListDao.findBySerialNo(serialNo);		
 	}
 
 	@Override
 	public List<DeviceListBean> findAll() {
-		return null;
+		return deviceListDao.findAll();
 	}
 
 	@Override
-	public void saveOrUpdate(DeviceListBean device) {
+	public void saveOrUpdate(DeviceListBean device) throws SQLException {
+		if (findById(device.getSerialNo())==null) {
+			deviceListDao.save(device);
+		} else {
+			deviceListDao.update(device);
+		}
 		
 	}
 
 	@Override
-	public void delete(String serialNo) {		
+	public void delete(String serialNo) throws SQLException {
+		deviceListDao.delete(serialNo);
+		
 	}
 
 }
