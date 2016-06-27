@@ -47,7 +47,7 @@
 		}
 	  </style>	   
 	  
-	<script type="text/javascript"> 
+	<!-- script type="text/javascript"> 
 	    function Pager(tableName, itemsPerPage) { 
 	        this.tableName = tableName; 
 	        this.itemsPerPage = itemsPerPage; 
@@ -118,7 +118,9 @@
 	            element.innerHTML = pagerHtml; 
 	        } 
 	    } 
-	    
+    </script--> 
+
+	<script type="text/javascript"> 
 	    function ddListDeviceOnChange() {
 	        var x = document.getElementById("ddDeviceList").value;
 	        var url = "/DMS1/dashboard/" + x + "/refresh"; // get selected value
@@ -127,7 +129,6 @@
             }
             return false;
 	     }
-
     </script> 
     
 	    <spring:url value="/resources/css/style.css" var="styleCss" />
