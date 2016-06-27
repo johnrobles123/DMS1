@@ -47,4 +47,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.selectAll();
 	}
 
+	public boolean logout() throws SQLException {
+		return userDao.logout(); 
+	}
 }

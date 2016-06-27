@@ -1,5 +1,7 @@
 package com.silverlake.dms.controller;
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,5 +58,12 @@ public class LoginController
 				}
 
 				return model;
+		}
+		
+		@RequestMapping(value="/logout",method=RequestMethod.GET)
+		public ModelAndView logout (HttpServletRequest request, HttpServletResponse response, @ModelAttribute("loginBean")LoginBean loginBean) throws SQLException {
+			loginDelegate.logout();
+			
+			return new ModelAndView("login");
 		}
 }

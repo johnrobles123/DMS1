@@ -17,4 +17,6 @@ public interface UserDao
 		public void delete(String id) throws SQLException;
 
 		public List<User> selectAll();
+		
+		public boolean logout() throws SQLException;
 }

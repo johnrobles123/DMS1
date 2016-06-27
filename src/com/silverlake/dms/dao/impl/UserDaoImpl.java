@@ -102,4 +102,12 @@ public class UserDaoImpl implements UserDao {
 		
 		return user;
 	}
+	
+	public boolean logout() throws SQLException {		
+		if (!dataSource.getConnection().isClosed()) {
+			dataSource.getConnection().close();
+		}
+		
+		return true;
+	}
 }

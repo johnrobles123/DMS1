@@ -24,6 +24,7 @@
 		    <td>My Reservations</td> 
 		    <td><p><a href = "/DMS1/admin">Admin</a></p></td>
 		    <td>About</td>
+		    <td><p><a href = "/DMS1/logout">Logout</a></p></td>
 		  </tr>
 		</table>
 	</div>

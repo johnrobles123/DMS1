@@ -25,4 +25,5 @@ public interface UserService
 		
 		public List<User> fetchAllUserList() throws SQLException;
 
+		public boolean logout() throws SQLException;
 }
