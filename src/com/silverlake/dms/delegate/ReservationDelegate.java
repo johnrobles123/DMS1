@@ -39,9 +39,21 @@ public class ReservationDelegate {
 	{
 		return reservationService.getReservation(seqNo);
 	}
+	
 	public void updateReservation(ReservationBean reservation) throws SQLException
 	{
 		reservationService.updateReservation(reservation);
 	}
 	
+	public String getAvailabilityStartTime(String deviceSerialNo) throws SQLException {
+		return reservationService.getAvailabilityStartTime(deviceSerialNo);
+	}
+	
+	public List<ReservationBean> getCurrentDayRecords(String deviceSerialNo) throws SQLException {
+		return reservationService.getCurrentDayRecords(deviceSerialNo);
+	}
+	
+	public List<ReservationBean> selectAllByDeviceSerialNo(String deviceSerialNo) {
+		return reservationService.selectAllByDeviceSerialNo(deviceSerialNo);
+	}
 }

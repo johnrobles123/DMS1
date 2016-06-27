@@ -10,6 +10,8 @@ public interface ReservationDao {
 	public boolean isOverlap(ReservationBean reservation) throws SQLException;
 	public void create(ReservationBean reservation) throws SQLException;
 	public List<ReservationBean> selectAll();
+	public List<ReservationBean> selectAllByDeviceSerialNo(String deviceSerialNo);
 	public ReservationBean getReservation(int seqNo);
 	public void updateReservation(ReservationBean reservation) throws SQLException;
+	public List<ReservationBean> getCurrentDayRecords(String deviceSerialNo) throws SQLException;
 }
