@@ -167,7 +167,16 @@
 	                            <select id="ddDeviceList" onchange="ddListDeviceOnChange()">
 	                            	<option value="*">ALL</option>
 	                                <c:forEach var="devicelist" items="${deviceList}">
-	                                    <option value="${devicelist.serialNo}">${devicelist.deviceName}</option>
+	                                    <!-- option value="${devicelist.serialNo}">${devicelist.deviceName}</option-->
+										<c:choose>
+											<c:when test="${devicelist.serialNo eq selectedDevice}">
+												<option value="${devicelist.serialNo}" selected>${devicelist.deviceName}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${devicelist.serialNo}">${devicelist.deviceName}</option>
+											</c:otherwise>
+										</c:choose>
+	                                    
 	                                </c:forEach>
 	                            </select>
                         	</form>

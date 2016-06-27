@@ -43,8 +43,8 @@ public class DashboardController {
 		
 		try {
 			//djList = deviceDelegate.selectAllData();
-			reserveList = reservationDelegate.selectAll();
 			deviceStatusStr = reservationDelegate.getAvailabilityStartTime("12345");
+			reserveList = reservationDelegate.selectAll();
 			
 			dList.add(new DeviceListBean("Projector 1", "12345", "old projector"));
 			dList.add(new DeviceListBean("Projector 2", "23456", "new projector"));
@@ -63,13 +63,14 @@ public class DashboardController {
 	@RequestMapping(value="/dashboard/{serialNo}/refresh",method=RequestMethod.GET)
 	public String refreshDashboard(@PathVariable("serialNo") String serialNo, Model model) {
 		List<ReservationBean> reserveList = new ArrayList<ReservationBean>();
+		//List<ReservationBean> djList = new ArrayList<ReservationBean>();
 		List<DeviceListBean> dList = new ArrayList<DeviceListBean>();
 		String deviceStatusStr = null;
 		
 		try {
-			//djList = deviceDelegate.selectAllData();
-			reserveList = reservationDelegate.getCurrentDayRecords(serialNo);
+			//reserveList = reservationDelegate.getCurrentDayRecords(serialNo);
 			deviceStatusStr = reservationDelegate.getAvailabilityStartTime(serialNo);
+			reserveList = reservationDelegate.selectAllByDeviceSerialNo(serialNo);
 			
 			dList.add(new DeviceListBean("Projector 1", "12345", "old projector"));
 			dList.add(new DeviceListBean("Projector 2", "23456", "new projector"));
@@ -82,7 +83,8 @@ public class DashboardController {
 		model.addAttribute("deviceJournal", reserveList);
 		model.addAttribute("deviceList", dList);
 		model.addAttribute("deviceStatus", deviceStatusStr);
-		
+		model.addAttribute("selectedDevice", serialNo);
+
 		return "dashboard";
 	}
 }

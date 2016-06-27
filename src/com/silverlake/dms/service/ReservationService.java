@@ -26,4 +26,6 @@ public interface  ReservationService {
 	public String getAvailabilityStartTime(String deviceSerialNo) throws SQLException;
 	
 	public List<ReservationBean> getCurrentDayRecords(String deviceSerialNo) throws SQLException;
+	
+	public List<ReservationBean> selectAllByDeviceSerialNo(String deviceSerialNo);
 }

@@ -243,10 +243,65 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		PreparedStatement pstmt;
 		try {
-			pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no");
-		
+			pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND TIMESTAMP(a.reserve_date, a.time_to) >= CURRENT_TIMESTAMP()");
+			
+			/*
+			java.util.Date utilDate = new java.util.Date();
+		    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		    java.sql.Time sqlTime = new java.sql.Time(sqlDate.getTime()); 
+			
+			pstmt.setTime(1, sqlTime);		
+			*/
+
 			try {
 				ResultSet rbSet = pstmt.executeQuery();
+				
+				while (rbSet.next()) {
+					ReservationBean rb = new ReservationBean();
+					rb.setSeqNo(rbSet.getInt(1));
+					rb.setDeviceSerialNo(rbSet.getString(2));
+					rb.setDeviceName(rbSet.getString(3));
+					rb.setUserName(rbSet.getString(4));
+					rb.setReserveDate(rbSet.getDate(5));
+					rb.setTimeFrom(rbSet.getTime(6));
+					rb.setTimeTo(rbSet.getTime(7));
+					rb.setLocation(rbSet.getString(8));
+					rb.setAddInfo(rbSet.getString(9));
+					reserveList.add(rb);
+				}
+	
+			} finally {
+				pstmt.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return reserveList;
+	}
+	
+	public List<ReservationBean> selectAllByDeviceSerialNo(String deviceSerialNo) {
+		
+		List<ReservationBean> reserveList = new ArrayList<ReservationBean>();
+		
+		PreparedStatement pstmt;
+		try {
+			pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND a.device_serial_no = ? AND TIMESTAMP(a.reserve_date, a.time_to) >= CURRENT_TIMESTAMP()");
+			
+			java.util.Date utilDate = new java.util.Date();
+		    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		    java.sql.Time sqlTime = new java.sql.Time(sqlDate.getTime()); 
+			
+			pstmt.setString(1, deviceSerialNo);
+			//pstmt.setTime(2, sqlTime);
+
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(cal.getTime());
+			
+			try {
+				ResultSet rbSet = pstmt.executeQuery();
+				
+				Date curDate = new Date();
 				
 				while (rbSet.next()) {
 					ReservationBean rb = new ReservationBean();
@@ -339,18 +394,12 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		try {
 			if (dbProductName.toLowerCase().contains("mysql")) {
-				pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND a.device_serial_no = ? AND a.reserve_date = CURDATE() AND a.time_to >= ? ORDER BY time_from");
+				pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND a.device_serial_no = ? AND a.reserve_date = CURDATE() AND TIMESTAMP(a.reserve_date, a.time_to) >= CURRENT_TIMESTAMP() ORDER BY TIMESTAMP(a.reserve_date, a.time_to)");
 			} else if (dbProductName.toLowerCase().contains("oracle")) {
 				pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND a.device_serial_no = ? AND a.reserve_date = trunc(sysdate) ORDER BY time_from");
-			}		
-
-			
-			java.util.Date utilDate = new java.util.Date();
-		    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-		    java.sql.Time sqlTime = new java.sql.Time(sqlDate.getTime()); 
+			}		 
 			
 			pstmt.setString(1, deviceSerialNo);
-			pstmt.setTime(2, sqlTime);
 			
 			try {
 				ResultSet rbSet = pstmt.executeQuery();

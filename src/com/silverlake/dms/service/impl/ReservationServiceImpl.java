@@ -1,5 +1,7 @@
 package com.silverlake.dms.service.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -65,16 +67,34 @@ public class ReservationServiceImpl implements ReservationService {
 		rb = reservationDao.getCurrentDayRecords(deviceSerialNo);
 		
 		if (rb.size() > 0) {
+			/*
+			java.util.Date utilDate = new java.util.Date();
+		    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		    java.sql.Time sqlTime = new java.sql.Time(sqlDate.getTime());
+			*/
+			
 			Calendar cal1 = Calendar.getInstance();
 			cal1.setTime(rb.get(0).getTTimeFrom());
+			long cal1Seconds = (cal1.get(Calendar.SECOND) +
+			                    cal1.get(Calendar.MINUTE) * 60 +
+			                    cal1.get(Calendar.HOUR) * 3600);
+			
 			
 			Calendar cal2 = Calendar.getInstance();
 			cal2.setTime(rb.get(0).getTTimeTo());
+			long cal2Seconds = (cal2.get(Calendar.SECOND) +
+			                    cal2.get(Calendar.MINUTE) * 60 +
+			                    cal2.get(Calendar.HOUR) * 3600);
 			
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(cal.getTime());
-				
-			if (cal.after(cal1.getTime()) && cal.before(cal2.getTime())) {
+			long calSeconds = (cal.get(Calendar.SECOND) +
+		                       cal.get(Calendar.MINUTE) * 60 +
+		                       cal.get(Calendar.HOUR) * 3600);
+			
+			System.out.println("[" + calSeconds + "] [" + cal1Seconds + "] [" + cal2Seconds + "]");
+			//System.out.println("[" + cal.getTime().toString() + "] [" + cal1.getTime().toString() + "] [" + cal2.getTime().toString() + "]");
+			if ((calSeconds - cal1Seconds >= 0) && (calSeconds - cal2Seconds <= 0)) {
 				result = false;
 			}
 			// if there are no records, then it means the device is available
@@ -122,5 +142,9 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public List<ReservationBean> getCurrentDayRecords(String deviceSerialNo) throws SQLException {		
 		return reservationDao.getCurrentDayRecords(deviceSerialNo);
+	}
+	
+	public List<ReservationBean> selectAllByDeviceSerialNo(String deviceSerialNo) {
+		return reservationDao.selectAllByDeviceSerialNo(deviceSerialNo);
 	}
 }

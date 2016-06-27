@@ -53,5 +53,7 @@ public class ReservationDelegate {
 		return reservationService.getCurrentDayRecords(deviceSerialNo);
 	}
 	
-	
+	public List<ReservationBean> selectAllByDeviceSerialNo(String deviceSerialNo) {
+		return reservationService.selectAllByDeviceSerialNo(deviceSerialNo);
+	}
 }
