@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -12,7 +13,14 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create New Reservation</title>
+<title>Create/Update Reservation</title>
+  <spring:url value="/resources/css/style.css" var="styleCss" />
+		<spring:url value="/resources/css/font-awesome.min.css" var="fontAwesomeCss" />
+		<spring:url value="/resources/js/index.js" var="mainJs" />
+	    <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+	  	<link href="${styleCss}" rel="stylesheet" />
+	  	<link href="${fontAwesomeCss}" rel="stylesheet" />
+  	  	<script src="${mainJs}"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>  
@@ -99,9 +107,13 @@
 			</td>
 		    </tr>
 	        <tr>
-	        <td>Repeat: </td> <td><select name="repeating"> <option></option> <option>Daily</option> <option>Weekly</option>  </select></td>
-	        
-	        <td>Until: </td>  <td><input type="text" name="repeatTo" class="datepicker" size="50" maxlength="10"></td>
+			<c:choose> 
+			  <c:when test="${empty reservation.deviceSerialNo}">
+			       <td>Repeat: </td> <td><select name="repeating"> <option></option> <option>Daily</option> <option>Weekly</option>  </select></td>
+				        
+				        <td>Until: </td>  <td><input type="text" name="repeatTo" class="datepicker" size="50" maxlength="10"></td>
+			  </c:when>
+			</c:choose>
 	        </tr>
 	        <tr>      
 	        <td>Location: </td>

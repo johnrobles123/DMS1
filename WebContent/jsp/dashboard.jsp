@@ -107,7 +107,7 @@
 									<td>${dj.timeFrom}</td>
 									<td>${dj.timeTo}</td>
 									<td>
-										<spring:url value="/reserve/${dj.seqNo}" var="queryReserveUrl" />
+										<spring:url value="/viewreserve/${dj.seqNo}" var="queryReserveUrl" />
 										<spring:url value="/reserve/${dj.seqNo}/update" var="updateReservationUrl" /> 
 										<spring:url value="/reserve/${dj.seqNo}/return" var="returnDeviceUrl" />
 				
