@@ -28,6 +28,8 @@ public class DashboardController {
 	
 	@Autowired
 	private ReservationDelegate reservationDelegate;
+	
+	private static final String RETURNED = "R";
 
 	@RequestMapping(value="/dashboard",method=RequestMethod.GET)
 	public String displayDashboard(Model model)
@@ -107,7 +109,10 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value="/dashboard/{seqNo}/return",method=RequestMethod.POST)
-	public String returnedDevice(@PathVariable("seqNo") int seqNo, Model model, ReservationBean reserveBean) {
-		return "dashboard";
+	public String returnedDevice(@PathVariable("seqNo") int seqNo, Model model, ReservationBean reserveBean) throws SQLException {
+		reservationDelegate.updateReservation(seqNo, RETURNED);
+		
+		//return "dashboard";
+		return "redirect:/dashboard";
 	}
 }

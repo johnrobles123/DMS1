@@ -243,7 +243,7 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		PreparedStatement pstmt;
 		try {
-			pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND TIMESTAMP(a.reserve_date, a.time_to) >= CURRENT_TIMESTAMP() ORDER BY TIMESTAMP(a.reserve_date, a.time_to)");
+			pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND a.status IS NULL AND TIMESTAMP(a.reserve_date, a.time_to) >= CURRENT_TIMESTAMP() ORDER BY TIMESTAMP(a.reserve_date, a.time_to)");
 			
 			/*
 			java.util.Date utilDate = new java.util.Date();
@@ -444,8 +444,8 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		
-		pstmt.setInt(1, seqNo);
-		pstmt.setString(2, status); 
+		pstmt.setString(1, status);
+		pstmt.setInt(2, seqNo);
 		
 		pstmt.execute();
 	}

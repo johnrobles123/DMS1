@@ -51,6 +51,10 @@
 		    text-align:center;
 		    padding:5px;
 		}
+		
+		#confirmDialogue {
+            display:none;
+        }
 	  </style>	   
 
 	<script type="text/javascript"> 
@@ -91,7 +95,6 @@
 		                url : '/DMS1/dashboard/' + seqNo + '/return',
 		                type: 'POST',
 		                success : function(data) {
-		                   alert("Device has been returned");
 		                }
 		            });
 		        }
@@ -110,6 +113,8 @@
 	 
 	 <body>				
 		<font color="red">${message}</font>
+		
+		<div id="confirmDialogue">Confirm return?</div>
 		
 		<div id="section">
 			<div class="filters">
@@ -200,7 +205,7 @@
 					
 				    <div id="pageNavPosition" align="center"></div>
 				    <script type="text/javascript">
-			            var pager = new Pager("devicejournaltable", 2);  
+			            var pager = new Pager("devicejournaltable", 15);  
 			            pager.init();  
 			            pager.showPageNav('pager', 'pageNavPosition');  
 			            pager.showPage(1);
@@ -208,10 +213,36 @@
 					<div style="width:30%; float:right">
 						<tr align="left">
 							<td><a id="reserveLink" href="reserve">Make a Reservation</a></td>
-							<td><a id="returnLink" onclick="processReturn()">Return</a></td>
+							<td><a id="returnLink">Return</a></td>
 						</tr>
 					</div>
 			</div>
 		</div>
+		
+	    <!-- include you jquery ui theme -->
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" />
+		<!-- include the jquery library -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<!-- include the jquery ui library -->
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		
+		<script>
+			$("#returnLink").click(function() {
+				$("#confirmDialogue").dialog({
+					modal: true,
+					title: "Are you sure?",
+					buttons: {
+						"YES": function() {
+							processReturn();
+							$(this).dialog("close");
+							location.reload(true);
+						},
+						"NO": function() {
+							$(this).dialog("close");
+						}
+					}
+				});
+			});
+		</script>
 	</body>
 </html>
