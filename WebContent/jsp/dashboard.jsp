@@ -120,49 +120,44 @@
 					</c:if>
 			
 					<h1>Device Schedule</h1>
-			
-					<table id="devicejournaltable" class="fullwidth">
-						<thead>
-							<tr>
-								<th>Seq No</th>
-								<th>Device Name</th>
-								<th>User Name</th>
-								<th>Reserve Date</th>
-								<th>Time From</th>
-								<th>Time To</th>
-								<th>Action</th>
-								<th id="thCenter" align="center">Returned?</th>
-							</tr>
-						</thead>
-			
-						<c:forEach var="dj" items="${deviceJournal}">
-						    <tr>
-								<td width="10%">${dj.seqNo}</td>
-								<td width="15%">${dj.deviceName}</td>
-								<td width="15%">${dj.userName}</td>
-								<td width="10%">${dj.reserveDate}</td>
-								<td width="10%">${dj.timeFrom}</td>
-								<td width="10%">${dj.timeTo}</td>
-								<td width="20%">
-								  <spring:url value="/reserve/${dj.seqNo}" var="queryReserveUrl" />
-								  <spring:url value="/reserve/${dj.seqNo}/update" var="updateReservationUrl" /> 
-								  <spring:url value="/reserve/${dj.seqNo}/cancel" var="cancelDeviceUrl" />
-								  <spring:url value="/reserve/${dj.seqNo}/return" var="returnDeviceUrl" />
+          
+					<div class="datagrid">
+						<table id="devicejournaltable">
+							<thead>
+								<tr>
+									<th>Seq No</th>
+									<th>Device Name</th>
+									<th>User Name</th>
+									<th>Reserve Date</th>
+									<th>Time From</th>
+									<th>Time To</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="dj" items="${deviceJournal}">
+								<tr>
+									<td>${dj.seqNo}</td>
+									<td>${dj.deviceName}</td>
+									<td>${dj.userName}</td>
+									<td>${dj.reserveDate}</td>
+									<td>${dj.timeFrom}</td>
+									<td>${dj.timeTo}</td>
+									<td>
+										<spring:url value="/reserve/${dj.seqNo}" var="queryReserveUrl" />
+										<spring:url value="/reserve/${dj.seqNo}/update" var="updateReservationUrl" /> 
+										<spring:url value="/reserve/${dj.seqNo}/return" var="returnDeviceUrl" />
 				
-								  <button class="btn btn-info" 
-				                                          onclick="location.href='${queryReserveUrl}'">Query</button>
-								  <button class="btn btn-primary" 
-				                                          onclick="location.href='${updateReservationUrl}'">Update</button>
-								  <button class="btn btn-danger" 
-				                                          onclick="this.disabled=true;post('${cancelReservationUrl}')">Cancel</button>
-				                </td>
-				                <td width="10%" align="center">
-								  <input type="checkbox" class="checkbox" 
-				                                          onclick="this.disabled=true;post('${returnReservationUrl}')">
-				                </td>
-						    </tr>
-						</c:forEach>
-					</table>
+										<button class="btn btn-info" onclick="location.href='${queryReserveUrl}'">Query</button>
+										<button class="btn btn-primary" onclick="location.href='${updateReservationUrl}'">Update</button>
+										<button class="btn btn-danger" onclick="this.disabled=true;post('${deleteReservationUrl}')">Delete</button>
+									</td>
+								</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+					
 				    <div id="pageNavPosition" align="center"></div>
 				    <script type="text/javascript">
 			            var pager = new Pager("devicejournaltable", 2);  
