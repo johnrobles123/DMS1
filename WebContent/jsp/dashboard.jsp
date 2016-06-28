@@ -132,6 +132,7 @@
 									<th>Time From</th>
 									<th>Time To</th>
 									<th>Action</th>
+									<th id="thCenter" align="center" !important>Returned?</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -146,11 +147,16 @@
 									<td>
 										<spring:url value="/viewreserve/${dj.seqNo}" var="queryReserveUrl" />
 										<spring:url value="/reserve/${dj.seqNo}/update" var="updateReservationUrl" /> 
-										<spring:url value="/reserve/${dj.seqNo}/return" var="returnDeviceUrl" />
+										<spring:url value="/reserve/${dj.seqNo}/cancel" var="cancelDeviceUrl" />
+								  		<spring:url value="/reserve/${dj.seqNo}/return" var="returnDeviceUrl" />
 				
 										<button class="btn btn-info" onclick="location.href='${queryReserveUrl}'">Query</button>
 										<button class="btn btn-primary" onclick="location.href='${updateReservationUrl}'">Update</button>
-										<button class="btn btn-danger" onclick="this.disabled=true;post('${deleteReservationUrl}')">Delete</button>
+								  		<button class="btn btn-danger" onclick="this.disabled=true;post('${cancelReservationUrl}')">Cancel</button>
+				                	</td>
+					                <td width="10%" align="center">
+									  <input type="checkbox" class="checkbox" onclick="this.disabled=true;post('${returnReservationUrl}')">
+					                </td>
 									</td>
 								</tr>
 								</c:forEach>
