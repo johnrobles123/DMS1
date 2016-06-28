@@ -151,4 +151,10 @@ public class ReservationServiceImpl implements ReservationService {
 	public List<ReservationBean> selectAllByDeviceSerialNo(String deviceSerialNo) {
 		return reservationDao.selectAllByDeviceSerialNo(deviceSerialNo);
 	}
+
+	@Override
+	public void updateReservation(int seqNo, String status) throws SQLException {
+		reservationDao.updateReservation(seqNo, status);
+		
+	}
 }

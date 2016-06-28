@@ -20,6 +20,41 @@
 	  	<link href="${styleCss}" rel="stylesheet" />
 	  	<link href="${fontAwesomeCss}" rel="stylesheet" />
   	  	<script src="${mainJs}"></script>
+  	  		  <style type='text/css'>
+		#header {
+		    background-color:black;
+		    color:white;
+		    text-align:center;
+		    padding:5px;
+		}
+		#nav {
+		    line-height:30px;
+		    background-color:#eeeeee;
+		    padding:5px;
+		}
+		#section {
+		    width:100%;
+		    float:left;
+		    padding:10px;
+		}
+		
+		#devicejournaltable thead tr th {
+			text-align:left;
+		}
+		
+		#thCenter {
+			text-align:center !important;
+		}
+		
+		
+		#footer {
+		    background-color:black;
+		    color:white;
+		    clear:both;
+		    text-align:center;
+		    padding:5px;
+		}
+	  </style>	   
 </head>
 <body>
 	<font color="red">${message}</font>

@@ -13,5 +13,6 @@ public interface ReservationDao {
 	public List<ReservationBean> selectAllByDeviceSerialNo(String deviceSerialNo);
 	public ReservationBean getReservation(int seqNo);
 	public void updateReservation(ReservationBean reservation) throws SQLException;
+	public void updateReservation(int seqNo, String status ) throws SQLException;
 	public List<ReservationBean> getCurrentDayRecords(String deviceSerialNo) throws SQLException;
 }

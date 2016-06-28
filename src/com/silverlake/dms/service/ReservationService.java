@@ -18,6 +18,7 @@ public interface  ReservationService {
 	public ReservationBean getReservation(int seqNo);
 	
 	public void updateReservation(ReservationBean reservation) throws SQLException;
+	public void updateReservation(int seqNo, String status) throws SQLException;
 	
 	public boolean isDeviceAvailable(String deviceSerialNo) throws SQLException;
 	

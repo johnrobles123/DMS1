@@ -23,7 +23,22 @@
   	  	<script src="${mainJs}"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>  
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+  <script type="text/javascript">
+  	function repeatValidation() {
+			
+		if (document.getElementById("repeating").value == "Weekly" || document.getElementById("repeating").value == "Daily")
+		{
+			document.getElementById("repeatTo").enabled = true;
+			document.getElementById("repeatTo").required = true;
+		}
+		else
+		{	
+			document.getElementById("repeatTo").enabled= false;
+			document.getElementById("repeatTo").required = false;
+		}
+	}
+  </script>  
  <style>
     .datepicker{
       
@@ -39,7 +54,7 @@
 	<font color="red">${message}</font>
 	<form:form class="form-horizontal" method="post" modelAttribute="reservation" action="${reserveActionUrl}">
 	    <form:hidden path="seqNo" />
-	    <table>
+	    <table id="reservationDtl">
 	    <tbody>
 	    	<tr>
 			<td>Device Name :</td>
@@ -109,9 +124,10 @@
 	        <tr>
 			<c:choose> 
 			  <c:when test="${empty reservation.deviceSerialNo}">
-			       <td>Repeat: </td> <td><select name="repeating"> <option></option> <option>Daily</option> <option>Weekly</option>  </select></td>
+			       <td>Repeat: </td> 
+			       <td><select name="repeating" onclick="repeatValidation()" id="repeating" > <option></option> <option>Daily</option> <option>Weekly</option>  </select></td>
 				        
-				        <td>Until: </td>  <td><input type="text" name="repeatTo" class="datepicker" size="50" maxlength="10"></td>
+				   <td>Until: </td>  <td><input type="text" name="repeatTo" class="datepicker" size="50" maxlength="10" id="repeatTo" disabled></td>
 			  </c:when>
 			</c:choose>
 	        </tr>
@@ -121,7 +137,7 @@
 				<div class="form-group ${status.error ? 'has-error' : ''}">
 					<div class="col-sm-10">
 						<form:input path="location" type="text" id="location" size="30" maxlength="255" placeholder="Location" required="false" />
-			            <form:errors path="reserveDate" class="control-label" />
+			            <form:errors path="reserveDate" class="control-label" /> 
 					</div>
 				</div>
 			    </spring:bind></td>

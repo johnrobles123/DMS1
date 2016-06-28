@@ -45,6 +45,11 @@ public class ReservationDelegate {
 		reservationService.updateReservation(reservation);
 	}
 	
+	public void updateReservation(int seqNo, String status) throws SQLException 
+	{
+		reservationService.updateReservation(seqNo, status);
+	}
+	
 	public String getAvailabilityStartTime(String deviceSerialNo) throws SQLException {
 		return reservationService.getAvailabilityStartTime(deviceSerialNo);
 	}

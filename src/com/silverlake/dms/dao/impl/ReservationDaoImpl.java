@@ -402,9 +402,9 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		try {
 			if (dbProductName.toLowerCase().contains("mysql")) {
-				pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND a.device_serial_no = ? AND a.reserve_date = CURDATE() AND TIMESTAMP(a.reserve_date, a.time_to) >= CURRENT_TIMESTAMP() ORDER BY TIMESTAMP(a.reserve_date, a.time_to)");
+				pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info, a.status FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND a.device_serial_no = ? AND a.reserve_date = CURDATE() AND TIMESTAMP(a.reserve_date, a.time_to) >= CURRENT_TIMESTAMP() ORDER BY TIMESTAMP(a.reserve_date, a.time_to)");
 			} else if (dbProductName.toLowerCase().contains("oracle")) {
-				pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND a.device_serial_no = ? AND a.reserve_date = trunc(sysdate) ORDER BY time_from");
+				pstmt = dataSource.getConnection().prepareStatement("SELECT a.seq_no, a.device_serial_no, b.device_name, a.username, a.reserve_date, a.time_from, a.time_to, a.location, a.add_info, a.status FROM device_journal a, device_list b WHERE a.device_serial_no = b.serial_no AND a.device_serial_no = ? AND a.reserve_date = trunc(sysdate) ORDER BY time_from");
 			}		 
 			
 			pstmt.setString(1, deviceSerialNo);
@@ -423,6 +423,7 @@ public class ReservationDaoImpl implements ReservationDao {
 					rb.setTimeTo(rbSet.getTime(7));
 					rb.setLocation(rbSet.getString(8));
 					rb.setAddInfo(rbSet.getString(9));
+					rb.setStatus(rbSet.getString(10));
 					reserveList.add(rb);
 				}
 	
@@ -434,6 +435,19 @@ public class ReservationDaoImpl implements ReservationDao {
 		}
 		
 		return reserveList;
+	}
+
+	@Override
+	public void updateReservation(int seqNo, String status) throws SQLException {
+
+		String query = "update DEVICE_JOURNAL set status = ? where seq_no = ?";
+		
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		
+		pstmt.setInt(1, seqNo);
+		pstmt.setString(2, status); 
+		
+		pstmt.execute();
 	}
 	
 }
