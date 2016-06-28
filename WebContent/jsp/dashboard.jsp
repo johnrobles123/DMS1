@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ include file="header.jsp" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
 <html>
@@ -61,6 +62,41 @@
             }
             return false;
 	     }
+	    
+		function checkBoxValidation() {
+			var displayReturn = "false";			
+			$('#devicejournaltable').find('tr').each(function () {
+		        var row = $(this);
+		        if (row.find('input[type="checkbox"]').is(':checked')) {
+		        	displayReturn = "true";
+		        }
+		    }); 
+            
+            if (displayReturn == "true") {
+            	document.getElementById("reserveLink").style.visibility = "hidden";
+            	document.getElementById("returnLink").style.visibility = "visible";
+            } else {
+            	document.getElementById("reserveLink").style.visibility = "visible";
+            	document.getElementById("returnLink").style.visibility = "hidden";            	
+            }
+		}
+		
+		function processReturn() {
+			var displayReturn = "false";			
+			$('#devicejournaltable').find('tr').each(function () {
+		        var row = $(this);
+		        if (row.find('input[type="checkbox"]').is(':checked')) {
+		        	var seqNo = parseInt(row.find("#seqNo").html());
+		        	$.ajax({
+		                url : '/DMS1/dashboard/' + seqNo + '/return',
+		                type: 'POST',
+		                success : function(data) {
+		                   alert("Device has been returned");
+		                }
+		            });
+		        }
+		    }); 
+		}
     </script> 
     
 	    <spring:url value="/resources/css/style.css" var="styleCss" />
@@ -108,7 +144,6 @@
 			</div>
 		
 			<div class="container">
-			
 					<c:if test="${not empty msg}">
 					    <div class="alert alert-${css} alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" 
@@ -137,28 +172,27 @@
 							</thead>
 							<tbody>
 								<c:forEach var="dj" items="${deviceJournal}">
-								<tr>
-									<td>${dj.seqNo}</td>
-									<td>${dj.deviceName}</td>
-									<td>${dj.userName}</td>
-									<td>${dj.reserveDate}</td>
-									<td>${dj.timeFrom}</td>
-									<td>${dj.timeTo}</td>
-									<td>
-										<spring:url value="/viewreserve/${dj.seqNo}" var="queryReserveUrl" />
-										<spring:url value="/reserve/${dj.seqNo}/update" var="updateReservationUrl" /> 
-										<spring:url value="/reserve/${dj.seqNo}/cancel" var="cancelDeviceUrl" />
-								  		<spring:url value="/reserve/${dj.seqNo}/return" var="returnDeviceUrl" />
-				
-										<button class="btn btn-info" onclick="location.href='${queryReserveUrl}'">Query</button>
-										<button class="btn btn-primary" onclick="location.href='${updateReservationUrl}'">Update</button>
-								  		<button class="btn btn-danger" onclick="this.disabled=true;post('${cancelReservationUrl}')">Cancel</button>
-				                	</td>
-					                <td width="10%" align="center">
-									  <input type="checkbox" class="checkbox" onclick="this.disabled=true;post('${returnReservationUrl}')">
-					                </td>
-									</td>
-								</tr>
+									<tr>
+										<td id="seqNo" value="${dj.seqNo}">${dj.seqNo}</td>
+										<td>${dj.deviceName}</td>
+										<td>${dj.userName}</td>
+										<td>${dj.reserveDate}</td>
+										<td>${dj.timeFrom}</td>
+										<td>${dj.timeTo}</td>
+										<td>
+											<spring:url value="/viewreserve/${dj.seqNo}" var="queryReserveUrl" />
+											<spring:url value="/reserve/${dj.seqNo}/update" var="updateReservationUrl" /> 
+											<spring:url value="/reserve/${dj.seqNo}/cancel" var="cancelDeviceUrl" />
+									  		<spring:url value="/reserve/${dj.seqNo}/return" var="returnDeviceUrl" />
+					
+											<button class="btn btn-info" onclick="location.href='${queryReserveUrl}'">Query</button>
+											<button class="btn btn-primary" onclick="location.href='${updateReservationUrl}'">Update</button>
+									  		<button class="btn btn-danger" onclick="this.disabled=true;post('${cancelReservationUrl}')">Cancel</button>
+					                	</td>
+						                <td width="10%" align="center">
+										  	<input type="checkbox" class="checkbox" id="returned_chk", value="${dj.returned}" onclick="checkBoxValidation()" />
+						                </td>
+									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
@@ -173,10 +207,11 @@
 				    </script>
 					<div style="width:30%; float:right">
 						<tr align="left">
-							<td><p><a href="reserve">Make a Reservation</a></p></td>
+							<td><a id="reserveLink" href="reserve">Make a Reservation</a></td>
+							<td><a id="returnLink" onclick="processReturn()">Return</a></td>
 						</tr>
 					</div>
-				</div>
+			</div>
 		</div>
 	</body>
 </html>

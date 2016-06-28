@@ -14,13 +14,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.silverlake.dms.delegate.DeviceDelegate;
 import com.silverlake.dms.delegate.ReservationDelegate;
-import com.silverlake.dms.grid.DeviceJournalGrid;
-import com.silverlake.dms.viewBean.DeviceBean;
-import com.silverlake.dms.viewBean.DeviceJournal;
 import com.silverlake.dms.viewBean.DeviceListBean;
 import com.silverlake.dms.viewBean.ReservationBean;
 
@@ -107,6 +103,11 @@ public class DashboardController {
 		model.addAttribute("deviceStatus", deviceStatusStr);
 		model.addAttribute("selectedDevice", serialNo);
 
+		return "dashboard";
+	}
+	
+	@RequestMapping(value="/dashboard/{seqNo}/return",method=RequestMethod.POST)
+	public String returnedDevice(@PathVariable("seqNo") int seqNo, Model model, ReservationBean reserveBean) {
 		return "dashboard";
 	}
 }

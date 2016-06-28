@@ -22,7 +22,13 @@ public class ReservationBean implements Comparable<ReservationBean> {
 	
 	private String location;
 	private String addInfo;
+	private String status;
+	private boolean returned;
 	
+	public ReservationBean() {
+		this.setReturned(false);
+	}
+
 	public static class OrderByTimeFrom implements Comparator<ReservationBean> {
 
 		@Override
@@ -195,6 +201,22 @@ public class ReservationBean implements Comparable<ReservationBean> {
 		this.seqNo = seqNo;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public boolean isReturned() {
+		return returned;
+	}
+
+	public void setReturned(boolean returned) {
+		this.returned = returned;
+	}
+	
 	@Override
 	public int compareTo(ReservationBean o) {
 		// TODO Auto-generated method stub
