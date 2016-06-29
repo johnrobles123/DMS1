@@ -1,5 +1,6 @@
 package com.silverlake.dms.controller;
 
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.silverlake.dms.delegate.DeviceDelegate;
 import com.silverlake.dms.delegate.ReservationDelegate;
 import com.silverlake.dms.viewBean.DeviceListBean;
+import com.silverlake.dms.viewBean.LoginBean;
 import com.silverlake.dms.viewBean.ReservationBean;
 
 @Controller
@@ -30,12 +32,12 @@ public class DashboardController {
 	private ReservationDelegate reservationDelegate;
 	
 	private static final String RETURNED = "R";
+	private static final String CANCEL = "C";
 
 	@RequestMapping(value="/dashboard",method=RequestMethod.GET)
-	public String displayDashboard(Model model)
-	{
+	public String displayDashboard(HttpServletRequest request, HttpServletResponse response, Model model)
+	{	
 		List<ReservationBean> reserveList = new ArrayList<ReservationBean>();
-		List<ReservationBean> reserveDayList = new ArrayList<ReservationBean>();
 		List<DeviceListBean> dList = new ArrayList<DeviceListBean>();
 		String deviceStatusStr = null;
 		
@@ -108,11 +110,17 @@ public class DashboardController {
 		return "dashboard";
 	}
 	
+	@RequestMapping(value="/dashboard/{seqNo}/cancel",method=RequestMethod.POST)
+	public String cancelDevice(@PathVariable("seqNo") int seqNo, Model model, ReservationBean reserveBean) throws SQLException {
+		reservationDelegate.updateReservation(seqNo, CANCEL);
+		
+		return "redirect:/dashboard";
+	}
+	
 	@RequestMapping(value="/dashboard/{seqNo}/return",method=RequestMethod.POST)
 	public String returnedDevice(@PathVariable("seqNo") int seqNo, Model model, ReservationBean reserveBean) throws SQLException {
 		reservationDelegate.updateReservation(seqNo, RETURNED);
-		
-		//return "dashboard";
+
 		return "redirect:/dashboard";
 	}
 }

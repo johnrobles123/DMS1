@@ -52,8 +52,16 @@
 		    padding:5px;
 		}
 		
-		#confirmDialogue {
+		#confirmReturnDialogue {
             display:none;
+        }
+        
+		#confirmCancelDialogue {
+            display:none;
+        }
+        
+        #returnLink {
+        	visibility:hidden;
         }
 	  </style>	   
 
@@ -98,7 +106,35 @@
 		                }
 		            });
 		        }
-		    }); 
+		    });
+		}
+			
+		function processCancel(seqNo) {
+			/*
+			var seqNo = $.map(table.rows('.selected').data(), function (item) {
+				return item[0]
+			});
+			*/
+			$("#confirmCancelDialogue").dialog({
+				modal: true,
+				title: "Confirmation",
+				buttons: {
+					"YES": function() {
+			        	$.ajax({
+			                url : '/DMS1/dashboard/' + seqNo + '/cancel',
+			                type: 'POST',
+			                success : function(data) {
+			                }
+			            });
+			        	
+						$(this).dialog("close");
+						location.reload(true);
+					},
+					"NO": function() {
+						$(this).dialog("close");
+					}
+				}
+			});
 		}
     </script> 
     
@@ -114,7 +150,8 @@
 	 <body>				
 		<font color="red">${message}</font>
 		
-		<div id="confirmDialogue">Confirm return?</div>
+		<div id="confirmReturnDialogue">Confirm return?</div>
+		<div id="confirmCancelDialogue">Confirm cancellation?</div>
 		
 		<div id="section">
 			<div class="filters">
@@ -192,7 +229,7 @@
 					
 											<button class="btn btn-info" onclick="location.href='${queryReserveUrl}'">Query</button>
 											<button class="btn btn-primary" onclick="location.href='${updateReservationUrl}'">Update</button>
-									  		<button class="btn btn-danger" onclick="this.disabled=true;post('${cancelReservationUrl}')">Cancel</button>
+									  		<button class="btn btn-danger" id="cancelReservation" onclick="processCancel('${dj.seqNo}')">Cancel</button>
 					                	</td>
 						                <td width="10%" align="center">
 										  	<input type="checkbox" class="checkbox" id="returned_chk", value="${dj.returned}" onclick="checkBoxValidation()" />
@@ -228,9 +265,9 @@
 		
 		<script>
 			$("#returnLink").click(function() {
-				$("#confirmDialogue").dialog({
+				$("#confirmReturnDialogue").dialog({
 					modal: true,
-					title: "Are you sure?",
+					title: "Confirmation",
 					buttons: {
 						"YES": function() {
 							processReturn();

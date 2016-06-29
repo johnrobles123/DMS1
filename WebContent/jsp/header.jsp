@@ -13,20 +13,25 @@
 	<script src="${mainJs}"></script>
 </head>
 <body>
+
 	<div id="header">
 		<h1>Device Monitoring System</h1>
 	</div>
 	
 	<div id="nav">
-		<table style="width:100%">
-		  <tr>
-		    <td><p><a href = "/DMS1/dashboard">Home</a></p></td>
-		    <td>My Reservations</td> 
-		    <td><p><a href = "/DMS1/admin">Admin</a></p></td>
-		    <td>About</td>
-		    <td><p><a href = "/DMS1/logout">Logout</a></p></td>
-		  </tr>
-		</table>
+		<form action="/DMS1/logout" method="post">
+			<p>Welcome ${loggedInUser}</p>
+			<table style="width:100%">
+			  <tr>
+			    <td><p><a href = "/DMS1/dashboard">Home</a></p></td>
+			    <td>My Reservations</td> 
+			    <td><p><a href = "/DMS1/admin">Admin</a></p></td>
+			    <td>About</td>
+			    <!-- td><p><a href = "/DMS1/logout">Logout</a></p></td-->
+			    <td><input type="submit" value="Logout" /></td>
+			  </tr>
+			</table>
+		</form>
 	</div>
 </body>
 </html>
