@@ -33,7 +33,7 @@ public class DeviceListServiceImpl implements DeviceListService {
 
 	@Override
 	public void saveOrUpdate(DeviceListBean device) throws SQLException {
-		if (findById(device.getSerialNo())==null) {
+		if ((findById(device.getSerialNo()))==null) {
 			deviceListDao.save(device);
 		} else {
 			deviceListDao.update(device);

@@ -40,6 +40,8 @@ public class DeviceListDaoImpl implements DeviceListDao {
 			device.setSerialNo(deviceSet.getString(1));
 			device.setDeviceName(deviceSet.getString(2));
 			device.setAdditionalInfo(deviceSet.getString(3));
+		} else {
+			device = null;
 		}			
 		
 		return device;

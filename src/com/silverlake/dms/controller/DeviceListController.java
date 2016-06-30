@@ -63,10 +63,6 @@ public class DeviceListController {
 
 		DeviceListBean device = new DeviceListBean();
 
-		// set default value
-		device.setDeviceName(null);
-		device.setSerialNo(null);
-		device.setAdditionalInfo(null);
 		
 		model.addAttribute("deviceForm", device);
 
@@ -89,15 +85,12 @@ public class DeviceListController {
 
 
 	// delete device
-	@RequestMapping(value = "/devicelist/{serialNo}/delete", method = RequestMethod.POST)
-	public String deleteDevice(@PathVariable("serialNo") String serialNo, final RedirectAttributes redirectAttributes) throws SQLException {
+	@RequestMapping(value = "/devicelist/{serialNo}/delete", method = RequestMethod.DELETE)
+	public String deleteDevice(@PathVariable("serialNo") String serialNo) throws SQLException {
 
 		deviceListService.delete(serialNo);
 		
-		redirectAttributes.addFlashAttribute("css", "success");
-		redirectAttributes.addFlashAttribute("msg", "Device is deleted!");
-		
-		return "redirect:/devicelist";
+		return "redirect:/devicelist/list";
 
 	}	
 	
