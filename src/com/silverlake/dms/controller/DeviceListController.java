@@ -85,12 +85,12 @@ public class DeviceListController {
 
 
 	// delete device
-	@RequestMapping(value = "/devicelist/{serialNo}/delete", method = RequestMethod.DELETE)
-	public String deleteDevice(@PathVariable("serialNo") String serialNo) throws SQLException {
+	@RequestMapping(value = "/devicelist/{serialNo}/delete", method = RequestMethod.POST)
+	public String deleteDevice(HttpServletRequest request, HttpServletResponse response, @PathVariable("serialNo") String serialNo) throws SQLException {
 
 		deviceListService.delete(serialNo);
-		
-		return "redirect:/devicelist/list";
+		//return "redirect:/devicelist/list";
+		return "redirect:/admin";
 
 	}	
 	
