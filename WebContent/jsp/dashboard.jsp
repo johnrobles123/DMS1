@@ -16,128 +16,10 @@
 	    <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
 	    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
 	    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
-
-	  <style type='text/css'>
-		#header {
-		    background-color:black;
-		    color:white;
-		    text-align:center;
-		    padding:5px;
-		}
-		#nav {
-		    line-height:30px;
-		    background-color:#eeeeee;
-		    padding:5px;
-		}
-		#section {
-		    width:100%;
-		    float:left;
-		    padding:10px;
-		}
-		
-		#devicejournaltable thead tr th {
-			text-align:left;
-		}
-		
-		#thCenter {
-			text-align:center !important;
-		}
-		
-		
-		#footer {
-		    background-color:black;
-		    color:white;
-		    clear:both;
-		    text-align:center;
-		    padding:5px;
-		}
-		
-		#confirmReturnDialogue {
-            display:none;
-        }
-        
-		#confirmCancelDialogue {
-            display:none;
-        }
-        
-        #returnLink {
-        	visibility:hidden;
-        }
-	  </style>	   
-
-	<script type="text/javascript"> 
-	    function ddListDeviceOnChange() {
-	        var x = document.getElementById("ddDeviceList").value;
-	        var url = "/DMS1/dashboard/" + x + "/refresh"; // get selected value
-            if (url) { // require a URL
-            	location.href = url; // redirect
-            }
-            return false;
-	     }
-	    
-		function checkBoxValidation() {
-			var displayReturn = "false";			
-			$('#devicejournaltable').find('tr').each(function () {
-		        var row = $(this);
-		        if (row.find('input[type="checkbox"]').is(':checked')) {
-		        	displayReturn = "true";
-		        }
-		    }); 
-            
-            if (displayReturn == "true") {
-            	document.getElementById("reserveLink").style.visibility = "hidden";
-            	document.getElementById("returnLink").style.visibility = "visible";
-            } else {
-            	document.getElementById("reserveLink").style.visibility = "visible";
-            	document.getElementById("returnLink").style.visibility = "hidden";            	
-            }
-		}
-		
-		function processReturn() {
-			var displayReturn = "false";			
-			$('#devicejournaltable').find('tr').each(function () {
-		        var row = $(this);
-		        if (row.find('input[type="checkbox"]').is(':checked')) {
-		        	var seqNo = parseInt(row.find("#seqNo").html());
-		        	$.ajax({
-		                url : '/DMS1/dashboard/' + seqNo + '/return',
-		                type: 'POST',
-		                success : function(data) {
-		                }
-		            });
-		        }
-		    });
-		}
-			
-		function processCancel(seqNo) {
-			/*
-			var seqNo = $.map(table.rows('.selected').data(), function (item) {
-				return item[0]
-			});
-			*/
-			$("#confirmCancelDialogue").dialog({
-				modal: true,
-				title: "Confirmation",
-				buttons: {
-					"YES": function() {
-			        	$.ajax({
-			                url : '/DMS1/dashboard/' + seqNo + '/cancel',
-			                type: 'POST',
-			                success : function(data) {
-			                }
-			            });
-			        	
-						$(this).dialog("close");
-						location.reload(true);
-					},
-					"NO": function() {
-						$(this).dialog("close");
-					}
-				}
-			});
-		}
-    </script> 
-    
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+   		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	       
 	    <spring:url value="/resources/css/style.css" var="styleCss" />
 		<spring:url value="/resources/css/font-awesome.min.css" var="fontAwesomeCss" />
 		<spring:url value="/resources/js/index.js" var="mainJs" />
@@ -153,7 +35,7 @@
 		<div id="confirmReturnDialogue">Confirm return?</div>
 		<div id="confirmCancelDialogue">Confirm cancellation?</div>
 		
-		<div id="section">
+		<div class="container">
 			<div class="filters">
 				<table>
 					<tr>
@@ -185,7 +67,7 @@
 				</table>
 			</div>
 		
-			<div class="container">
+			<div >
 					<c:if test="${not empty msg}">
 					    <div class="alert alert-${css} alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" 
@@ -247,22 +129,15 @@
 			            pager.showPageNav('pager', 'pageNavPosition');  
 			            pager.showPage(1);
 				    </script>
-					<div style="width:30%; float:right">
+					<div style="float:right">
 						<tr align="left">
-							<td><a id="reserveLink" href="reserve">Make a Reservation</a></td>
+							<td><button class="btn btn-default" id="reserveLink" href="reserve">Make a Reservation</button></td>
 							<td><a id="returnLink">Return</a></td>
 						</tr>
 					</div>
 			</div>
 		</div>
-		
-	    <!-- include you jquery ui theme -->
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" />
-		<!-- include the jquery library -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<!-- include the jquery ui library -->
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-		
+				
 		<script>
 			$("#returnLink").click(function() {
 				$("#confirmReturnDialogue").dialog({

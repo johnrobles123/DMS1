@@ -77,3 +77,73 @@ function Pager(tableName, itemsPerPage) {
         element.innerHTML = pagerHtml; 
     } 
 }
+function ddListDeviceOnChange() {
+    var x = document.getElementById("ddDeviceList").value;
+    var url = "/DMS1/dashboard/" + x + "/refresh"; // get selected value
+    if (url) { // require a URL
+    	location.href = url; // redirect
+    }
+    return false;
+ }
+
+function checkBoxValidation() {
+	var displayReturn = "false";			
+	$('#devicejournaltable').find('tr').each(function () {
+        var row = $(this);
+        if (row.find('input[type="checkbox"]').is(':checked')) {
+        	displayReturn = "true";
+        }
+    }); 
+    
+    if (displayReturn == "true") {
+    	document.getElementById("reserveLink").style.visibility = "hidden";
+    	document.getElementById("returnLink").style.visibility = "visible";
+    } else {
+    	document.getElementById("reserveLink").style.visibility = "visible";
+    	document.getElementById("returnLink").style.visibility = "hidden";            	
+    }
+}
+
+function processReturn() {
+	var displayReturn = "false";			
+	$('#devicejournaltable').find('tr').each(function () {
+        var row = $(this);
+        if (row.find('input[type="checkbox"]').is(':checked')) {
+        	var seqNo = parseInt(row.find("#seqNo").html());
+        	$.ajax({
+                url : '/DMS1/dashboard/' + seqNo + '/return',
+                type: 'POST',
+                success : function(data) {
+                }
+            });
+        }
+    });
+}
+	
+function processCancel(seqNo) {
+	/*
+	var seqNo = $.map(table.rows('.selected').data(), function (item) {
+		return item[0]
+	});
+	*/
+	$("#confirmCancelDialogue").dialog({
+		modal: true,
+		title: "Confirmation",
+		buttons: {
+			"YES": function() {
+	        	$.ajax({
+	                url : '/DMS1/dashboard/' + seqNo + '/cancel',
+	                type: 'POST',
+	                success : function(data) {
+	                }
+	            });
+	        	
+				$(this).dialog("close");
+				location.reload(true);
+			},
+			"NO": function() {
+				$(this).dialog("close");
+			}
+		}
+	});
+}

@@ -19,7 +19,8 @@
 		<spring:url value="/resources/css/font-awesome.min.css" var="fontAwesomeCss" />
 		<spring:url value="/resources/js/index.js" var="mainJs" />
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-	  	<link href="${styleCss}" rel="stylesheet" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link href="${styleCss}" rel="stylesheet" />
 	  	<link href="${fontAwesomeCss}" rel="stylesheet" />
   	    <script src="${mainJs}"></script>  	
 	 </head>
@@ -50,23 +51,7 @@
 							<th>Action</th>
 						</tr>
 					</thead>
-					<!-- <tfoot>
-						<tr>
-							<td colspan="4">
-								<div id="paging">
-									<ul>
-										<li><a href="#"><span>Previous</span></a></li>
-										<li><a href="#" class="active"><span>1</span></a></li>
-										<li><a href="#"><span>2</span></a></li>
-										<li><a href="#"><span>3</span></a></li>
-										<li><a href="#"><span>4</span></a></li>
-										<li><a href="#"><span>5</span></a></li>
-										<li><a href="#"><span>Next</span></a></li>
-									</ul>
-								</div>
-							</td>
-						</tr>
-					</tfoot> -->
+					
 					<tbody>
 						<c:forEach var="device" items="${deviceList}">
 						<tr>
@@ -85,6 +70,23 @@
 						</tr>
 						</c:forEach>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="4">
+								<div id="paging">
+									<ul>
+										<li><a href="#"><span>Previous</span></a></li>
+										<li><a href="#" class="active"><span>1</span></a></li>
+										<li><a href="#"><span>2</span></a></li>
+										<li><a href="#"><span>3</span></a></li>
+										<li><a href="#"><span>4</span></a></li>
+										<li><a href="#"><span>5</span></a></li>
+										<li><a href="#"><span>Next</span></a></li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 			

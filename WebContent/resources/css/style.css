@@ -1,13 +1,12 @@
 /*Global*/
+@media (min-width: 1500px){
+	.container {
+	    width: 1470px;
+	}
+}
 body {
-	/* background: #FFFAF0; fallback for old browsers
-	background: -webkit-linear-gradient(right, #FFFAF0, #ffffff);
-	background: -moz-linear-gradient(right, #FFFAF0, #ffffff);
-	background: -o-linear-gradient(right, #FFFAF0, #ffffff);
-	background: linear-gradient(to left, #FFFAF0, #ffffff);
-	 */
 	background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAHElEQVQIW2M8duuFDwMOwAiStFKT2IJNftBJAgBoNhrcJEdqSgAAAABJRU5ErkJggg==) repeat;
-	font-family: FontAwesome;
+	font-family: Arial, Helvetica, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;      
 }
@@ -16,6 +15,55 @@ h1{
 }
 h2{
 	text-align: left;
+}
+#devicejournaltable thead tr th {
+	text-align:left;
+}
+
+#thCenter {
+	text-align:center !important;
+}
+
+
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px;
+}
+
+#confirmReturnDialogue {
+          display:none;
+      }
+      
+#confirmCancelDialogue {
+          display:none;
+      }
+      
+      #returnLink {
+      	visibility:hidden;
+      }
+.nav>li{
+    background: #e8e8e8;
+    padding: 5px;
+}
+.nav>li:first-child{
+	padding-right: 0px;
+}
+.nav>li:last-child{
+	padding-left: 0px;
+}
+.nav>li>a{
+    text-shadow: 2px 2px 1px rgb(255, 255, 255);
+    font: 16px bold;
+    text-transform: uppercase;
+    font-family: sans-serif;
+}
+.nav>li>a:focus, .nav>li>a:hover{
+    background-color: #3498db;
+    color: #ffffff;
+    text-shadow: 2px 2px 1px rgb(103, 103, 103);
 }
 #header {
     background-color:black;
@@ -27,7 +75,6 @@ h2{
     width:100%;
     float:left;
 }
-
 #footer {
     background-color:black;
     color:white;
@@ -140,7 +187,11 @@ ul#menu li {
 	position: relative;
 	z-index: 1;
 	margin: 0 auto;
-    padding:10px;		
+    padding:10px;
+    background: white;
+    -webkit-box-shadow:  inset 0px -2px 3px 0px rgb(156, 156, 156);
+	-moz-box-shadow:  inset 0px -2px 3px 0px rgb(156, 156, 156);
+	box-shadow:  inset 0px -2px 3px 0px rgb(156, 156, 156);
 }
 .container:before, .container:after {
 	content: "";
@@ -265,8 +316,4 @@ ul#menu li {
 }
 div.dhtmlx_window_active, div.dhx_modal_cover_dv { 
 	position: fixed !important; 
-}
-
-#thCenter {
-	text-align:center !important; 
 }
