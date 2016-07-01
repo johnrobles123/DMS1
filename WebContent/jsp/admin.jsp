@@ -6,6 +6,21 @@
 <%@ include file="header.jsp" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
 <html>
+
+<script type="text/javascript">
+
+function deleteDevice(serialNo) {
+	
+        	$.ajax({
+                url : '/DMS1/devicelist/' + serialNo + '/delete',
+                type: 'POST',
+                success : 'callback'
+            });
+
+}
+
+</script> 
+
 	<head>
 	  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	  <title>Administrator</title>
@@ -54,20 +69,22 @@
 					
 					<tbody>
 						<c:forEach var="device" items="${deviceList}">
-						<tr>
-							<td>${device.serialNo}</td>
-							<td>${device.deviceName}</td>
-							<td>${device.additionalInfo}</td>
-							<td>
-								<spring:url value="/device/${device.serialNo}" var="userUrl" />
-								<spring:url value="/device/${device.serialNo}/delete" var="deleteUrl" /> 
-								<spring:url value="/device/${device.serialNo}/update" var="updateUrl" />
-		
-								<button class="btn btn-info" onclick="location.href='${userUrl}'">Query</button>
-								<button class="btn btn-primary" onclick="location.href='${updateUrl}'">Update</button>
-								<button class="btn btn-danger" onclick="this.disabled=true;post('${deleteUrl}')">Delete</button>
-							</td>
-						</tr>
+							<tr>
+								<td>
+									${device.serialNo}
+								</td>
+								<td>${device.deviceName}</td>
+								<td>${device.additionalInfo}</td>
+								<td>
+									<spring:url value="/devicelist/${device.serialNo}" var="userUrl" />
+									<spring:url value="/devicelist/add" var="addUrl" /> 
+									<spring:url value="/devicelist/${device.serialNo}/delete" var="deleteUrl" /> 
+									<spring:url value="/devicelist/${device.serialNo}/update" var="updateUrl" />
+								
+									<button class="btn btn-info" onclick="location.href='${userUrl}'">Query</button>
+									<button class="btn btn-primary" onclick="location.href='${updateUrl}'">Update</button>
+									<button id="deleteBtn" class="btn btn-danger" onclick="deleteDevice('${device.serialNo}')">Delete</button></td>
+							</tr>
 						</c:forEach>
 					</tbody>
 					<tfoot>
