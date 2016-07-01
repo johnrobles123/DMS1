@@ -3,6 +3,15 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+
+<script type="text/javascript">
+
+function goBack() {
+    window.history.back()
+} 
+
+</script> 
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Device List</title>
@@ -22,6 +31,9 @@
 
 	<h1>Device Detail</h1>
 	<br />
+
+	<spring:url value="/admin" var="adminUrl" />
+	<button class="btn btn-primary" onclick="goBack()">Go Back</button> 
 
 	<div class="row">
 		<label class="col-sm-2">Device Serial Numer:</label>

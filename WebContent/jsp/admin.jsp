@@ -7,19 +7,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
 <html>
 
-<script type="text/javascript">
-
-function deleteDevice(serialNo) {
-	
-        	$.ajax({
-                url : '/DMS1/devicelist/' + serialNo + '/delete',
-                type: 'POST',
-                success : 'callback'
-            });
-
-}
-
-</script> 
 
 	<head>
 	  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -39,11 +26,44 @@ function deleteDevice(serialNo) {
 		<link href="${styleCss}" rel="stylesheet" />
 	  	<link href="${fontAwesomeCss}" rel="stylesheet" />
   	    <script src="${mainJs}"></script>  	
+  	    
+		<script type="text/javascript">
+		
+		function deleteDevice(serialNo) {
+			
+		        	$.ajax({
+		                url : '/DMS1/devicelist/' + serialNo + '/delete',
+		                type: 'POST',
+		                success : 'callback'
+		            });
+		
+		}
+		
+		function confirmDelete(serialNo) {
+			$("#confirmDeleteDialogue").dialog({
+				modal: true,
+				title: "Confirmation",
+				buttons: {
+					"YES": function() {
+						deleteDevice(serialNo);
+						$(this).dialog("close");
+						location.reload(true);
+					},
+					"NO": function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		}
+		
+		</script> 
 	 </head>
 	 
 	 <body>		
 		<font color="red">${message}</font>
-		
+    
+    	<div id="confirmDeleteDialogue" >Are you sure you want to delete the record?</div>	
+
 		<div class="container">
 		
 			<c:if test="${not empty msg}">
@@ -57,7 +77,11 @@ function deleteDevice(serialNo) {
 			<h1>Administration</h1>
 			
 			<h2>All Devices</h2>
-			<button class="btn btn-default" id="addDevice" href="addDevice">Add New Device</button>
+
+			<spring:url value="/devicelist/${device.serialNo}" var="userUrl" />
+			<spring:url value="/devicelist/add" var="addUrl" /> 
+			<button class="btn btn-default" onclick="location.href='${addUrl}'">Add New Device</button>
+			
 			<div class="datagrid">
 				<table>
 					<thead>
@@ -85,7 +109,7 @@ function deleteDevice(serialNo) {
 								
 									<button class="btn btn-info" onclick="location.href='${userUrl}'">Details</button>
 									<button class="btn btn-primary" onclick="location.href='${updateUrl}'">Update</button>
-									<button id="deleteBtn" class="btn btn-danger" onclick="deleteDevice('${device.serialNo}')">Delete</button></td>
+									<button id="deleteBtn" class="btn btn-danger" onclick="confirmDelete('${device.serialNo}')">Delete</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>
