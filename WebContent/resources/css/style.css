@@ -4,17 +4,26 @@
 	    width: 1470px;
 	}
 }
+@media (min-width: 1900px){
+	.container {
+	    width: 1870px;
+	}
+}
 body {
 	background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAHElEQVQIW2M8duuFDwMOwAiStFKT2IJNftBJAgBoNhrcJEdqSgAAAABJRU5ErkJggg==) repeat;
 	font-family: Arial, Helvetica, sans-serif;
 	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;      
+	-moz-osx-font-smoothing: grayscale;
 }
 h1{
 	text-align: center;
 }
 h2{
 	text-align: left;
+	display: inline-block;
+}
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn.active.focus{
+	outline: 0 !important;
 }
 #devicejournaltable thead tr th {
 	text-align:left;
@@ -23,8 +32,6 @@ h2{
 #thCenter {
 	text-align:center !important;
 }
-
-
 #footer {
     background-color:black;
     color:white;
@@ -32,28 +39,27 @@ h2{
     text-align:center;
     padding:5px;
 }
-
 #confirmReturnDialogue {
-          display:none;
-      }
-      
+    display:none;
+}     
 #confirmCancelDialogue {
-          display:none;
-      }
-      
-      #returnLink {
-      	visibility:hidden;
-      }
+    display:none;
+}    
+#returnLink {
+	visibility:hidden;
+}
 .nav>li{
     background: #e8e8e8;
     padding: 5px;
+    border-right: 1px solid #cacaca;
 }
-.nav>li:first-child{
+/* .nav>li:first-child{
 	padding-right: 0px;
 }
 .nav>li:last-child{
 	padding-left: 0px;
-}
+	border-right: 0px;
+} */
 .nav>li>a{
     text-shadow: 2px 2px 1px rgb(255, 255, 255);
     font: 16px bold;
@@ -70,6 +76,11 @@ h2{
     color:white;
     text-align:center;
     padding:5px;
+}
+#welcome{
+    float: right;
+    padding: 13px;
+    text-align: right;
 }
 #section {
     width:100%;
@@ -106,7 +117,6 @@ ul#menu li {
 .fullwidth{
 	width: 100%;
 }
-
 /*Login and Forms*/
 .login-page {
 	width: 360px;
@@ -187,7 +197,7 @@ ul#menu li {
 	position: relative;
 	z-index: 1;
 	margin: 0 auto;
-    padding:10px;
+    padding:15px;
     background: white;
     -webkit-box-shadow:  inset 0px -2px 3px 0px rgb(156, 156, 156);
 	-moz-box-shadow:  inset 0px -2px 3px 0px rgb(156, 156, 156);
@@ -266,6 +276,9 @@ ul#menu li {
 	background: #E1EEF4; 
 	color: #00496B; 
 }
+.datagrid table tbody tr:hover { 
+	background: rgba(137, 187, 210, 0.5);
+}
 .datagrid table tbody td:first-child { 
 	border-left: none; 
 }
@@ -316,4 +329,12 @@ ul#menu li {
 }
 div.dhtmlx_window_active, div.dhx_modal_cover_dv { 
 	position: fixed !important; 
+}
+#addDevice{
+	float: right;
+    margin-top: 20px;
+}
+#addUser{
+	float: right;
+    margin-top: 20px;
 }

@@ -16,14 +16,14 @@
 	    <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
 	    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
 	    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
    		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-	       
+	    <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />        
 	    <spring:url value="/resources/css/style.css" var="styleCss" />
 		<spring:url value="/resources/css/font-awesome.min.css" var="fontAwesomeCss" />
 		<spring:url value="/resources/js/index.js" var="mainJs" />
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+	    <link href="${bootstrapCss}" rel="stylesheet" />
 	  	<link href="${styleCss}" rel="stylesheet" />
 	  	<link href="${fontAwesomeCss}" rel="stylesheet" />
   	  	<script src="${mainJs}"></script>
