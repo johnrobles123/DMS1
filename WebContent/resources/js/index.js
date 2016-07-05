@@ -97,10 +97,14 @@ function checkBoxValidation() {
     
     if (displayReturn == "true") {
     	document.getElementById("reserveLink").style.visibility = "hidden";
+    	document.getElementById("reserveLink").style.float = "left";
     	document.getElementById("returnLink").style.visibility = "visible";
+    	document.getElementById("returnLink").style.float = "right";
     } else {
     	document.getElementById("reserveLink").style.visibility = "visible";
-    	document.getElementById("returnLink").style.visibility = "hidden";            	
+    	document.getElementById("reserveLink").style.float = "right";
+    	document.getElementById("returnLink").style.visibility = "hidden";
+    	document.getElementById("returnLink").style.float = "left";
     }
 }
 
@@ -138,6 +142,31 @@ function processCancel(seqNo) {
 	                }
 	            });
 	        	
+				$(this).dialog("close");
+				location.reload(true);
+			},
+			"NO": function() {
+				$(this).dialog("close");
+			}
+		}
+	});
+}
+function deleteDevice(serialNo) {
+	$.ajax({
+        url : '/DMS1/devicelist/' + serialNo + '/delete',
+        type: 'POST',
+        success : 'callback'
+    });
+
+}
+
+function confirmDelete(serialNo) {
+	$("#confirmDeleteDialogue").dialog({
+	modal: true,
+	title: "Confirmation",
+	buttons: {
+			"YES": function() {
+				deleteDevice(serialNo);
 				$(this).dialog("close");
 				location.reload(true);
 			},

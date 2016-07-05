@@ -4,16 +4,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />	
-	<spring:url value="/resources/css/style.css" var="styleCss" />
-	<spring:url value="/resources/css/font-awesome.min.css" var="fontAwesomeCss" />
-	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
-	<spring:url value="/resources/js/index.js" var="mainJs" />
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-	<link href="${bootstrapCss}" rel="stylesheet" />
-	<link href="${styleCss}" rel="stylesheet" />
-	<link href="${fontAwesomeCss}" rel="stylesheet" />
-	<script src="${mainJs}"></script>
+	<!-- <script type='text/javascript' src='http://code.jDetails.com/jDetails-1.6.2.js'></script> 
+	    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jDetailsui/1.8.14/jDetails-ui.js"></script>
+	    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jDetailsui/1.8.14/themes/base/jDetails-ui.css"> 
+	    <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">-->
+	    <!-- <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jDetails.jqGrid.min.js"></script>  -->
+		<!-- <script type="text/javascript" src="https://code.jDetails.com/jDetails-3.0.0.min.js"></script> -->
+   	       
+	    <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />
+	    <spring:url value="/resources/css/style.css" var="styleCss" />
+		<spring:url value="/resources/css/font-awesome.min.css" var="fontAwesomeCss" />
+		<spring:url value="/resources/css/jquery-ui.css" var="jqueryuiCss" />
+		
+		<spring:url value="/resources/js/index.js" var="mainJs" />
+		<spring:url value="/resources/js/grid.locale-en.js" var="gridJs" />
+		<spring:url value="/resources/js/jquery-1.6.2.js" var="jqueryJs" />
+		<spring:url value="/resources/js/jquery-ui.js" var="jqueryuiJs" />
+		
+		<link href="${bootstrapCss}" rel="stylesheet" />
+		<link href="${styleCss}" rel="stylesheet" />
+	  	<link href="${fontAwesomeCss}" rel="stylesheet" />
+	  	<link href="${jqueryuiCss}" rel="stylesheet" />
+	  	
+  	    <script src="${mainJs}"></script>  	
+  	    <script src="${gridJs}"></script>  	
+  	    <script src="${jqueryJs}"></script>  	
+  	    <script src="${jqueryuiJs}"></script> 
 </head>
 <body>
 

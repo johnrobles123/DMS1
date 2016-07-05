@@ -53,6 +53,10 @@ h2{
     padding: 5px;
     border-right: 1px solid #cacaca;
 }
+#iconified{
+	font-family: FontAwesome;
+	cursor: pointer;
+}
 /* .nav>li:first-child{
 	padding-right: 0px;
 }

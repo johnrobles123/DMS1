@@ -11,58 +11,38 @@
 	<head>
 	  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	  <title>Administrator</title>
-	    <script type='text/javascript' src='http://code.jDetails.com/jDetails-1.6.2.js'></script>
+	    <!-- <script type='text/javascript' src='http://code.jDetails.com/jDetails-1.6.2.js'></script> 
 	    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jDetailsui/1.8.14/jDetails-ui.js"></script>
-	    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jDetailsui/1.8.14/themes/base/jDetails-ui.css">
-	    <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
-	    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
-	    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jDetails.jqGrid.min.js"></script>
+	    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jDetailsui/1.8.14/themes/base/jDetails-ui.css"> 
+	    <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">-->
+	    <!-- <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jDetails.jqGrid.min.js"></script>  -->
+		<!-- <script type="text/javascript" src="https://code.jDetails.com/jDetails-3.0.0.min.js"></script> -->
+   	       
 	    <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />
 	    <spring:url value="/resources/css/style.css" var="styleCss" />
 		<spring:url value="/resources/css/font-awesome.min.css" var="fontAwesomeCss" />
+		<spring:url value="/resources/css/jquery-ui.css" var="jqueryuiCss" />
+		
 		<spring:url value="/resources/js/index.js" var="mainJs" />
-	    <script type="text/javascript" src="https://code.jDetails.com/jDetails-3.0.0.min.js"></script>
+		<spring:url value="/resources/js/grid.locale-en.js" var="gridJs" />
+		<spring:url value="/resources/js/jquery-1.6.2.js" var="jqueryJs" />
+		<spring:url value="/resources/js/jquery-ui.js" var="jqueryuiJs" />
+		
 		<link href="${bootstrapCss}" rel="stylesheet" />
 		<link href="${styleCss}" rel="stylesheet" />
 	  	<link href="${fontAwesomeCss}" rel="stylesheet" />
+	  	<link href="${jqueryuiCss}" rel="stylesheet" />
+	  	
   	    <script src="${mainJs}"></script>  	
-  	    
-		<script type="text/javascript">
-		
-		function deleteDevice(serialNo) {
-			
-		        	$.ajax({
-		                url : '/DMS1/devicelist/' + serialNo + '/delete',
-		                type: 'POST',
-		                success : 'callback'
-		            });
-		
-		}
-		
-		function confirmDelete(serialNo) {
-			$("#confirmDeleteDialogue").dialog({
-				modal: true,
-				title: "Confirmation",
-				buttons: {
-					"YES": function() {
-						deleteDevice(serialNo);
-						$(this).dialog("close");
-						location.reload(true);
-					},
-					"NO": function() {
-						$(this).dialog("close");
-					}
-				}
-			});
-		}
-		
-		</script> 
+  	    <script src="${gridJs}"></script>  	
+  	    <script src="${jqueryJs}"></script>  	
+  	    <script src="${jqueryuiJs}"></script> 
 	 </head>
 	 
 	 <body>		
 		<font color="red">${message}</font>
     
-    	<div id="confirmDeleteDialogue" >Are you sure you want to delete the record?</div>	
+    	<div id="confirmDeleteDialogue" style="display:none">Are you sure you want to delete the record?</div>	
 
 		<div class="container">
 		
@@ -80,7 +60,7 @@
 
 			<spring:url value="/devicelist/${device.serialNo}" var="userUrl" />
 			<spring:url value="/devicelist/add" var="addUrl" /> 
-			<button class="btn btn-default" onclick="location.href='${addUrl}'">Add New Device</button>
+			<button class="btn btn-default" id="addDevice" onclick="location.href='${addUrl}'">Add New Device</button>
 			
 			<div class="datagrid">
 				<table>

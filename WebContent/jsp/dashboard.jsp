@@ -10,23 +10,32 @@
 	<head>
 	  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	  <title>Dashboard</title>
-	    <script type='text/javascript' src='http://code.jquery.com/jquery-1.6.2.js'></script>
-	    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
-	    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
-	    <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
-	    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
-	    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
-   		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-	    <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />        
+	    <!-- <script type='text/javascript' src='http://code.jDetails.com/jDetails-1.6.2.js'></script> 
+	    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jDetailsui/1.8.14/jDetails-ui.js"></script>
+	    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jDetailsui/1.8.14/themes/base/jDetails-ui.css"> 
+	    <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">-->
+	    <!-- <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jDetails.jqGrid.min.js"></script>  -->
+		<!-- <script type="text/javascript" src="https://code.jDetails.com/jDetails-3.0.0.min.js"></script> -->
+   	       
+	    <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />
 	    <spring:url value="/resources/css/style.css" var="styleCss" />
 		<spring:url value="/resources/css/font-awesome.min.css" var="fontAwesomeCss" />
+		<spring:url value="/resources/css/jquery-ui.css" var="jqueryuiCss" />
+		
 		<spring:url value="/resources/js/index.js" var="mainJs" />
-	    <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-	    <link href="${bootstrapCss}" rel="stylesheet" />
-	  	<link href="${styleCss}" rel="stylesheet" />
+		<spring:url value="/resources/js/grid.locale-en.js" var="gridJs" />
+		<spring:url value="/resources/js/jquery-1.6.2.js" var="jqueryJs" />
+		<spring:url value="/resources/js/jquery-ui.js" var="jqueryuiJs" />
+		
+		<link href="${bootstrapCss}" rel="stylesheet" />
+		<link href="${styleCss}" rel="stylesheet" />
 	  	<link href="${fontAwesomeCss}" rel="stylesheet" />
-  	  	<script src="${mainJs}"></script>
+	  	<link href="${jqueryuiCss}" rel="stylesheet" />
+	  	
+  	    <script src="${mainJs}"></script>  	
+  	    <script src="${gridJs}"></script>  	
+  	    <script src="${jqueryJs}"></script>  	
+  	    <script src="${jqueryuiJs}"></script> 
 	 </head>
 	 
 	 <body>				
@@ -124,16 +133,14 @@
 					
 				    <div id="pageNavPosition" align="center"></div>
 				    <script type="text/javascript">
-			            var pager = new Pager("devicejournaltable", 15);  
+			            var pager = new Pager("devicejournaltable", 2);  
 			            pager.init();  
 			            pager.showPageNav('pager', 'pageNavPosition');  
 			            pager.showPage(1);
 				    </script>
 					<div style="float:right">
-						<tr align="left">
-							<td><button class="btn btn-default" id="reserveLink" href="reserve">Make a Reservation</button></td>
-							<td><a id="returnLink">Return</a></td>
-						</tr>
+						<button class="btn btn-default" id="reserveLink" href="reserve" style="float:right">Make a Reservation</button>
+						<button class="btn btn-default" id="returnLink" href="returnLink" >Return</button>
 					</div>
 			</div>
 		</div>
